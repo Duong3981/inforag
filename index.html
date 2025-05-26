@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Trải nghiệm scrollytelling về pháp luật đấu giá hàng hóa tại Việt Nam, với thiết kế chuyên nghiệp, màu sắc tươi mới và sửa lỗi hiển thị bố cục khi zoom.">
-    <title>Scrollytelling Layout Fix: Đấu Giá Hàng Hóa tại Việt Nam</title>
+    <title>Scrollytelling Zoom Fix: Đấu Giá Hàng Hóa tại Việt Nam</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
     NARRATIVE PLAN & STRUCTURE: Maintained.
     VISUALIZATION & INTERACTION: Focus on fixing layout issues when zoomed out. Color palette remains "Professional & Fresh".
     CONFIRMATION: NO SVG, NO MERMAID JS.
-    KEY FIX: Horizontal padding moved from full-width sections to inner max-width containers.
+    KEY FIX: Removed max-width from body in media query to allow full-bleed sections on zoom.
     -->
     <style>
         html {
@@ -26,13 +26,15 @@
             color: #37474F; 
             line-height: 1.75; 
             overflow-x: hidden; 
+            margin: 0; /* Ensure no default body margin */
+            padding: 0; /* Ensure no default body padding */
         }
         /* Wrapper for max-width and horizontal padding, used inside full-width sections */
         .content-wrapper {
             max-width: 780px;
             margin-left: auto;
             margin-right: auto;
-            width: 100%; /* Ensures it's responsive within its max-width */
+            width: 100%; 
             padding-left: 1.5rem;
             padding-right: 1.5rem;
         }
@@ -49,14 +51,13 @@
             display: flex; 
             flex-direction: column;
             justify-content: center;
-            align-items: center; /* Centers the .content-wrapper horizontally if it's narrower */
+            align-items: center; 
             text-align: center;
             width: 100%; 
-            /* Removed horizontal padding, vertical padding can be on .content-wrapper or here */
             padding-top: 2rem;
             padding-bottom: 2rem;
         }
-        .hero-section .content-wrapper h1 { /* Target h1 specifically inside hero's content-wrapper */
+        .hero-section .content-wrapper h1 { 
             color: #FFFFFF;
             font-size: 2.8rem; 
             font-weight: 700;
@@ -90,7 +91,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center; /* This will center the .content-wrapper */
+            align-items: center; 
             text-align: center; 
             border-bottom: 1px solid #E0E0E0; 
             width: 100%;
@@ -99,7 +100,7 @@
             border-bottom: none;
             min-height: 40vh; 
         }
-        .scroll-section.align-left .content-wrapper { /* If content inside wrapper needs to be left-aligned */
+        .scroll-section.align-left .content-wrapper { 
             text-align: left;
         }
         .section-title-scrolly {
@@ -109,7 +110,6 @@
             color: #1565C0; 
             position: relative;
             padding-bottom: 0.5rem;
-            /* For centered title, this is fine. If title is left-aligned, adjust ::after */
         }
         .section-title-scrolly::after { 
             content: '';
@@ -123,7 +123,7 @@
             border-radius: 2px;
         }
         .scroll-section.align-left .section-title-scrolly {
-            align-self: flex-start; /* Align title to the start of the flex container if section is align-left */
+            align-self: flex-start; 
              text-align: left;
         }
         .scroll-section.align-left .section-title-scrolly::after {
@@ -143,14 +143,12 @@
              color: #1E88E5; 
         }
         
-        /* Content Blocks are children of .content-wrapper, so their width is relative to it */
         .content-block {
             background-color: #FFFFFF; 
             padding: 1.8rem; 
             border-radius: 10px; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.06); 
             margin-bottom: 2rem;
-            /* width: 100%; No need for width 100% if it's a block element inside .content-wrapper */
             text-align: left; 
             border: 1px solid #CFD8DC; 
             color: #37474F;
@@ -194,9 +192,8 @@
             padding: 1.6rem;
             border-radius: 8px;
             border: 1px solid #B0BEC5; 
-            /* max-width: 650px; Already constrained by parent .content-wrapper */
             box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-            margin-top: 1rem; /* Added margin for spacing */
+            margin-top: 1rem; 
         }
         .flow-step-scrolly {
             background-color: #F7F9FC; 
@@ -232,7 +229,7 @@
             position: relative;
             width: 100%; 
             max-width: 580px; 
-            margin: 2rem auto; /* This centers it if its parent (.content-wrapper) is wider */
+            margin: 2rem auto; 
             height: 400px; 
             background-color: #FFFFFF;
             padding: 1.5rem; 
@@ -248,7 +245,7 @@
         }
         .chart-canvas-wrapper { 
             position: relative;
-            height: calc(100% - 50px); /* Adjusted for title and potential bottom text */
+            height: calc(100% - 50px); 
             width: 100%;
         }
 
@@ -297,15 +294,20 @@
             text-align: center;
             width: 100%;
         }
-        .page-footer-scrolly .content-wrapper p { /* Target p inside footer's content-wrapper */
+        .page-footer-scrolly .content-wrapper p { 
              margin-bottom: 0.6rem; font-size: 0.85rem;
         }
         .page-footer-scrolly .content-wrapper .disclaimer { 
             font-style: italic; color: #78909C; 
         }
 
+        /* REMOVED max-width from body in this media query to fix zoom issue */
         @media (min-width: 1600px) {
-            body { max-width: 1400px; margin-left: auto; margin-right: auto; }
+            /* body { max-width: 1400px; margin-left: auto; margin-right: auto; } */
+            /* .content-wrapper can have its own max-width increased if desired for very large screens */
+            .content-wrapper {
+                 max-width: 900px; /* Example: slightly wider content on very large screens */
+            }
         }
     </style>
 </head>
@@ -553,7 +555,7 @@
                 tooltip: {
                     titleFont: { family: "'Merriweather', serif", weight: '700', size: 13 }, 
                     bodyFont: { family: "'Open Sans', sans-serif", size: 11 },
-                    backgroundColor: 'rgba(13, 71, 161, 0.9)',  // Dark Blue for tooltip
+                    backgroundColor: 'rgba(13, 71, 161, 0.9)',  
                     titleColor: '#FFFFFF', 
                     bodyColor: '#E3F2FD', 
                     padding: 10,
