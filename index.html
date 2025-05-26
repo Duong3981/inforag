@@ -8,24 +8,45 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Application Structure Plan: 
+        Theme: Evolution of Vietnamese Auction Law (LTM 2005 focus).
+        Structure: Single-page scrollable infographic with a modern, professional aesthetic.
+        Sections:
+        1. Hero Section.
+        2. Sticky Navigation.
+        3. Content Sections:
+            - Giới Thiệu: Definition styled with refined blockquote.
+            - Dòng Thời Gian.
+            - Động Lực LTM 2005.
+            - LTM 2005 - Trụ Cột.
+            - So Sánh Luật.
+            - Thách Thức & Tương Lai.
+            - Kết Luận.
+        4. Footer.
+        Animations: Replay on scroll. Section headings unified. Timeline icons updated. Blockquote style refined.
+    -->
+    <!-- Visualization & Content Choices:
+        * Blockquote styling for definition text further refined: quote mark color changed to accent gold, position adjusted for better visual appeal. Vertical bar color also changed to accent gold. Quote text font changed to EB Garamond.
+        * No SVG, No Mermaid JS, No Chart.js/Plotly.js.
+    -->
     <style>
         body { font-family: 'Source Sans Pro', sans-serif; background-color: #F4F6F8; color: #263238; line-height: 1.75; font-size: 17px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
         h1, h2, h3, h4, h5, h6 { font-family: 'EB Garamond', serif; letter-spacing: -0.01em; }
         
         h1 { font-size: 32px; font-weight: 700; color: #004D40; } 
         h2 { 
-            font-size: 28px; /* Base for mobile */
+            font-size: 28px; 
             font-weight: 700; 
-            color: #004D40; /* Text part of H2 is Dark Teal on light backgrounds */
+            color: #004D40; 
             margin-bottom: 2rem; 
-            padding-bottom: 0.75rem; 
-            border-bottom: 2px solid #B2DFDB; 
-            display: flex; 
+            padding-bottom: 0.5rem; 
+            border-bottom: 3px solid #B2DFDB; 
+            display: flex;
             align-items: baseline; 
         }
         h2 .roman-numeral {
-            font-size: 30px; /* Base for mobile */
-            color: #FFA000; /* Standard Gold */
+            font-size: 30px; 
+            color: #FFA000; 
             margin-right: 0.75rem; 
             font-weight: 700; 
             line-height: 1;
@@ -41,23 +62,11 @@
             h3 { font-size: 26px; margin-bottom: 1.25rem; }
         }
 
-        .section-intro-fullwidth h2 { 
-            color: #004D40; /* Text part Dark Teal */
-            border-bottom-color: #00695C; 
-        }
-        .section-intro-fullwidth h2 .roman-numeral { 
-            color: #FFA000; /* Roman numeral Gold */
-        }
+        .section-intro-fullwidth h2 { color: #004D40; border-bottom-color: #00695C; }
+        .section-intro-fullwidth h2 .roman-numeral { color: #FFA000; }
         
-        #ket-luan .card h2 { 
-            color: #FFFFFF !important; /* Text part white */
-            border-bottom: none; 
-            text-align:center; 
-            margin-bottom: 1.5rem;
-        }
-        #ket-luan .card h2 .roman-numeral { 
-            color: #FFD54F !important; /* Lighter gold for Roman numeral */
-        }
+        #ket-luan .card h2 { color: #FFFFFF !important; border-bottom: none; text-align:center; margin-bottom: 1.5rem;}
+        #ket-luan .card h2 .roman-numeral { color: #FFD54F !important; }
         
         p, ul, ol, table { margin-bottom: 1.5rem; }
         ul, ol { padding-left: 1.75rem; }
@@ -126,8 +135,8 @@
             color: #004D40; 
             font-weight: 600; 
             font-family: 'Source Sans Pro', sans-serif; 
-            font-size: 10px; /* Further reduced to fit longer text like "Trước 1997" */
-            line-height: 1.15; /* Adjusted for multi-line */
+            font-size: 10px; 
+            line-height: 1.15; 
             text-align: center; 
             padding: 3px; 
             border: 3px solid #FFFFFF; 
@@ -142,6 +151,42 @@
         .accent-text { color: #FFA000; font-weight: 700; }
         .highlight-text { color: #00695C; font-weight: 600; } 
         
+        .styled-blockquote {
+            border-left: 4px solid #FFA000; /* Accent gold bar */
+            padding-left: 2rem; /* Increased padding */
+            margin-left: 0.5rem; 
+            margin-top: 1.5rem;
+            margin-bottom: 1.75rem; 
+            position: relative;
+        }
+        .styled-blockquote p {
+            font-family: 'EB Garamond', serif; /* Serif font for quote */
+            font-style: italic;
+            color: #4A5568; /* Slightly darker gray for better contrast (gray-700 equivalent) */
+            font-size: 1.2em; /* Larger for emphasis */
+            line-height: 1.6; /* Adjusted line height */
+            margin-bottom: 0; 
+            position: relative; 
+            z-index: 1;
+        }
+        .styled-blockquote::before {
+            content: '\“'; 
+            font-family: 'EB Garamond', serif; 
+            font-size: 7rem; /* Larger quote mark */
+            color: #FFA000; /* Accent gold color */
+            position: absolute;
+            left: -0.6em; /* Adjusted to pull it left, slightly overlapping the bar */
+            top: -0.5em;  /* Adjusted for vertical alignment */
+            line-height: 0.8; /* Tighten line height of quote mark */
+            opacity: 0.6; /* Slightly more subtle */
+            z-index: 0; 
+        }
+        .styled-blockquote p span.italic { 
+            color: inherit; 
+            font-family: inherit; 
+        }
+
+
         .table-professional { width: 100%; border-collapse: collapse; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 0; }
         .table-professional th, .table-professional td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #E0E0E0; font-size: 15px;}
          @media (min-width: 768px) { .table-professional th, .table-professional td { padding: 16px 20px; font-size: 16px; } }
@@ -234,17 +279,19 @@
     <main class="content-wrapper">
 
         <section id="gioi-thieu" class="section-padding animate-on-scroll fade-in-up">
-            <h2><span class="roman-numeral">I.</span>Giới Thiệu Chung</h2>
+            <h2><span class="roman-numeral">I. Giới thiệu chung</h2>
             <p class="mb-8 text-lg leading-relaxed">Đấu giá hàng hóa, một phương thức giao dịch thương mại mang tính đặc thù, giữ vai trò <span class="font-semibold">then chốt</span> trong việc xác lập giá trị thị trường và tạo động lực cho lưu thông hàng hóa. Tại Việt Nam, hệ thống pháp luật điều chỉnh hoạt động này đã không ngừng được hoàn thiện qua các thời kỳ. Trong đó, sự ra đời của <span class="highlight-text">Luật Thương mại năm 2005</span> được xem là một <span class="accent-text">cột mốc pháp lý quan trọng</span>, đặt nền móng vững chắc cho sự phát triển của một thị trường đấu giá minh bạch và chuyên nghiệp hơn.</p>
             <div class="card card-accent-top-border animate-on-scroll scale-in">
                 <h3 class="text-xl">Định nghĩa <span class="highlight-text">Đấu giá Hàng hóa</span> theo Luật Thương mại 2005</h3>
-                <p class="text-md">Căn cứ Khoản 1 Điều 185 <span class="highlight-text">Luật Thương mại 2005</span>: <span class="italic">"Đấu giá hàng hoá là hoạt động thương mại, theo đó người bán hàng tự mình hoặc thuê người tổ chức đấu giá thực hiện việc bán hàng hoá <span class="font-semibold text-teal-700">công khai</span> để chọn người mua trả giá cao nhất."</span></p>
+                <div class="styled-blockquote">
+                    <p>Căn cứ Khoản 1 Điều 185 <span class="highlight-text">Luật Thương mại 2005</span>: <span class="italic">"Đấu giá hàng hoá là hoạt động thương mại, theo đó người bán hàng tự mình hoặc thuê người tổ chức đấu giá thực hiện việc bán hàng hoá <span class="font-semibold" style="color:#00796B;">công khai</span> để chọn người mua trả giá cao nhất."</span></p>
+                </div>
             </div>
         </section>
         
         <div class="section-intro-fullwidth animate-on-scroll fade-in-up">
             <div class="content-wrapper">
-                <h2><span class="roman-numeral">II.</span>Dòng Thời Gian Phát Triển Pháp Luật</h2>
+                <h2><span class="roman-numeral">II. Dòng thời gian phát triển pháp luật</h2>
                 <p>Hành trình pháp lý của hoạt động <span class="highlight-text">đấu giá hàng hóa</span> tại Việt Nam là một quá trình liên tục thích ứng và hoàn thiện, phản ánh sự thay đổi của bối cảnh kinh tế - xã hội qua từng giai đoạn.</p>
             </div>
         </div>
@@ -254,28 +301,28 @@
                 <div class="timeline-item animate-on-scroll fade-in-left">
                     <div class="timeline-icon">Trước<br>1997</div>
                     <div class="timeline-content">
-                        <h3 class="text-xl">Trước 1997: Giai đoạn Sơ khai & Hình thành</h3>
+                        <h3 class="text-xl"><span class="highlight-text">Giai đoạn Sơ khai & Hình thành</h3>
                         <p>Các quy định pháp luật về đấu giá còn mang tính <span class="accent-text">"điểm xuyết"</span>, chủ yếu nằm rải rác trong các văn bản giải quyết tình huống cụ thể (ví dụ: Quyết định 131/1997/TC-QĐ-VT). Thiếu một khung pháp lý <span class="font-semibold">chuyên biệt và thống nhất</span>.</p>
                     </div>
                 </div>
                 <div class="timeline-item animate-on-scroll fade-in-right">
                     <div class="timeline-icon">1997</div>
                     <div class="timeline-content">
-                        <h3 class="text-xl">1997: <span class="highlight-text">Luật Thương mại 1997</span></h3>
+                        <h3 class="text-xl"><span class="highlight-text">Luật Thương mại 1997</span></h3>
                         <p>Lần đầu tiên hoạt động <span class="highlight-text">đấu giá hàng hóa</span> được đề cập ở cấp độ luật. Tuy nhiên, quy định tại Điều 136 còn <span class="accent-text">khá sơ sài</span>, chủ yếu dẫn chiếu sang Bộ luật Dân sự và "Quy chế bán đấu giá hàng hoá do Chính phủ quy định" (Nghị định 86/CP năm 1996).</p>
                     </div>
                 </div>
                 <div class="timeline-item animate-on-scroll fade-in-left">
                     <div class="timeline-icon">01/<br>2005</div>
                     <div class="timeline-content">
-                        <h3 class="text-xl">2005 (Tháng 1): <span class="highlight-text">Nghị định 05/2005/NĐ-CP</span></h3>
+                        <h3 class="text-xl"><span class="highlight-text">Nghị định 05/2005/NĐ-CP</span></h3>
                         <p>Ban hành Quy chế bán đấu giá tài sản, thay thế Nghị định 86/CP. Văn bản này đã <span class="font-semibold">hệ thống hóa và chi tiết hóa</span> đáng kể các quy định, đưa ra nguyên tắc, hình thức đấu giá đa dạng, tạo <span class="accent-text">tiền đề quan trọng</span> cho <span class="highlight-text">Luật Thương mại 2005</span>.</p>
                     </div>
                 </div>
                 <div class="timeline-item animate-on-scroll fade-in-right">
                     <div class="timeline-icon" style="background-color: #004D40; color: #FFFFFF;">06/<br>2005</div>
                     <div class="timeline-content card-accent-top-border" style="border-color: #004D40;">
-                        <h3 class="text-xl" style="color:#004D40;"><span class="highlight-text">Luật Thương mại 2005</span> (Tháng 6)</h3>
+                        <h3 class="text-xl" style="color:#004D40;"><span class="highlight-text">Luật Thương mại 2005</span></h3>
                         <p class="font-semibold">Có hiệu lực từ 01/01/2006. Đây là <span class="accent-text">bước ngoặt pháp lý</span>, với Mục 1 Chương VI dành riêng để quy định một cách <span class="font-semibold">chi tiết và toàn diện</span> về hoạt động "<span class="highlight-text">Đấu giá hàng hóa</span>".</p>
                     </div>
                 </div>
@@ -284,7 +331,7 @@
 
         <div class="section-intro-fullwidth animate-on-scroll fade-in-up">
             <div class="content-wrapper">
-                 <h2><span class="roman-numeral">III.</span>Động Lực Ra Đời <span class="highlight-text">Luật Thương mại 2005</span></h2>
+                 <h2><span class="roman-numeral">III. Động lực ra đời Luật thương mại 2005</span></h2>
                  <p>Việc hoàn thiện khung pháp lý về <span class="highlight-text">đấu giá hàng hóa</span> trong <span class="highlight-text">Luật Thương mại 2005</span> xuất phát từ những yêu cầu cấp thiết của thực tiễn kinh tế và hội nhập.</p>
             </div>
         </div>
@@ -310,13 +357,13 @@
 
         <div class="section-intro-fullwidth animate-on-scroll fade-in-up">
             <div class="content-wrapper">
-                <h2><span class="roman-numeral">IV.</span><span class="highlight-text">Luật Thương mại 2005</span>: Những Trụ Cột Chính</h2>
+                <h2><span class="roman-numeral">IV. Luật thương mại 2005 và những trụ cột chính</h2>
                 <p>Luật Thương mại 2005 đã thiết lập một khung pháp lý tương đối hoàn chỉnh cho hoạt động đấu giá hàng hóa, dựa trên các nguyên tắc và quy trình rõ ràng.</p>
             </div>
         </div>
         <section id="ltm-2005" class="section-padding pt-8">
             <div class="mb-12 animate-on-scroll fade-in-up">
-                <h3 class="text-2xl text-center mb-8">A. Nguyên Tắc Đấu Giá (Điều 188)</h3>
+                <h3 class="text-2xl text-center mb-8 font-bold" style="color: #ce0300;">A. Nguyên Tắc Đấu Giá (Điều 188)</h3>
                 <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-8">
                     <div class="card card-accent-top-border"><p><span class="font-bold accent-text text-lg">Công khai:</span> Mọi thông tin liên quan đến cuộc đấu giá phải được <span class="font-semibold">công bố rộng rãi, rõ ràng</span> và <span class="font-semibold">dễ dàng tiếp cận</span>.</p></div>
                     <div class="card card-accent-top-border"><p><span class="font-bold accent-text text-lg">Trung thực:</span> Các bên tham gia phải hành động <span class="font-semibold">ngay thẳng, trung thực</span>, không được có hành vi gian lận hay thông đồng làm sai lệch kết quả.</p></div>
@@ -325,7 +372,7 @@
             </div>
 
             <div class="mb-12 animate-on-scroll fade-in-up">
-                <h3 class="text-2xl text-center mb-8">B. Quy Trình <span class="highlight-text">Đấu Giá Hàng Hóa</span> (Tổng quan)</h3>
+                <h3 class="text-2xl text-center mb-8 font-bold" style="color: #ce0300;">B. Quy Trình Tổng Quan</h3>
                 <div class="space-y-3 md:space-y-4 text-center max-w-2xl mx-auto">
                     <div class="flowchart-step p-4">1. Xác định <span class="font-semibold">giá khởi điểm</span> của hàng hóa (Điều 194)</div>
                     <div class="flowchart-arrow"></div>
@@ -341,7 +388,7 @@
             </div>
             
             <div class="mb-12 animate-on-scroll fade-in-up">
-                <h3 class="text-2xl text-center mb-8">C. Các Điểm Tiến Bộ Nổi Bật của <span class="highlight-text">LTM 2005</span></h3>
+                <h3 class="text-2xl text-center mb-8 font-bold" style="color: #ce0300;">C. Các Điểm Tiến Bộ Nổi Bật Của LTM 2005</h3>
                 <div class="card">
                     <ul class="list-disc list-inside space-y-3 text-lg leading-relaxed">
                         <li>Chính thức hóa và công nhận "<span class="highlight-text">đấu giá hàng hóa</span>" là một hoạt động thương mại <span class="font-semibold">độc lập và cụ thể</span>.</li>
@@ -354,7 +401,7 @@
             </div>
 
              <div class="animate-on-scroll fade-in-up">
-                <h3 class="text-2xl text-center mb-8">D. Bảng Tóm Tắt Một Số Điều Khoản Trọng Yếu</h3>
+                <h3 class="text-2xl text-center mb-8 font-bold" style="color: #ce0300;" >D. Bảng Tóm Tắt Một Số Điều Khoản Trọng Yếu</h3>
                 <div class="overflow-x-auto card p-0">
                     <table class="table-professional">
                         <thead>
@@ -367,7 +414,7 @@
                         <tbody>
                             <tr>
                                 <td class="font-semibold accent-text">Điều 185</td>
-                                <td><span class="highlight-text">Đấu giá hàng hóa</span></td>
+                                <td>Đấu giá hàng hóa</td>
                                 <td class="hidden lg:table-cell">Định nghĩa đấu giá hàng hóa; quy định 02 phương thức đấu giá chính: trả giá lên và đặt giá xuống.</td>
                             </tr>
                             <tr>
@@ -398,7 +445,7 @@
 
          <div class="section-intro-fullwidth animate-on-scroll fade-in-up">
             <div class="content-wrapper">
-                <h2><span class="roman-numeral">V.</span>So Sánh <span class="highlight-text">LTM 2005</span> và <span class="highlight-text">Luật Đấu giá Tài sản 2016</span></h2>
+                <h2><span class="roman-numeral">V. So sánh LTM 2005 và Luật đấu giá tài sản 2016</span></h2>
                 <p>Sự ra đời của <span class="highlight-text">Luật Đấu giá Tài sản 2016</span> đã tạo ra một hành lang pháp lý chuyên sâu hơn cho hoạt động đấu giá tài sản nói chung, tuy nhiên, cần có sự phân định rõ ràng với các quy định về đấu giá hàng hóa trong <span class="highlight-text">LTM 2005</span>.</p>
             </div>
         </div>
@@ -426,7 +473,7 @@
 
         <div class="section-intro-fullwidth animate-on-scroll fade-in-up">
             <div class="content-wrapper">
-                 <h2><span class="roman-numeral">VI.</span>Thách Thức và Hướng Hoàn Thiện</h2>
+                 <h2><span class="roman-numeral">VI. Thách thức và hướng hoàn thiện</h2>
                 <p>Dù <span class="highlight-text">Luật Thương mại 2005</span> đã mang lại những cải cách tích cực, quá trình thực thi vẫn bộc lộ những thách thức, đòi hỏi sự tiếp tục nghiên cứu và hoàn thiện khung pháp lý.</p>
             </div>
         </div>
@@ -456,7 +503,7 @@
         
         <section id="ket-luan" class="section-padding animate-on-scroll fade-in-up">
             <div class="card p-8 md:p-12 text-center" style="background-image: linear-gradient(135deg, #004D40 0%, #00695C 100%);">
-                <h2 class="mb-6"><span class="roman-numeral">VII.</span>Kết Luận</h2>
+                <h2 class="mb-6"><span class="roman-numeral">VII. Kết luận</h2>
                 <p class="text-xl md:text-2xl mb-6 leading-relaxed"><span class="highlight-text">Luật Thương mại 2005</span> thực sự là một <span class="font-bold accent-text">dấu ấn pháp lý sâu sắc</span> trong lịch sử phát triển của hoạt động <span class="highlight-text">đấu giá hàng hóa</span> tại Việt Nam. Những quy định tiến bộ của Luật đã góp phần quan trọng vào việc <span class="font-semibold highlight-text">minh bạch hóa và chuyên nghiệp hóa</span> thị trường, tăng cường bảo vệ quyền và lợi ích hợp pháp của các bên tham gia, qua đó tạo điều kiện thuận lợi cho sự phát triển theo hướng <span class="font-semibold highlight-text">hiện đại và hội nhập quốc tế</span>.</p>
                 <p class="text-xl md:text-2xl leading-relaxed">Mặc dù hành trình hoàn thiện pháp luật vẫn đang tiếp diễn, không thể phủ nhận vai trò <span class="font-semibold highlight-text">nền tảng và định hướng</span> mà <span class="highlight-text">Luật Thương mại 2005</span> đã kiến tạo, góp phần vào sự <span class="font-semibold highlight-text">phát triển ổn định và bền vững</span> của hoạt động <span class="highlight-text">đấu giá hàng hóa</span> trong tổng thể nền kinh tế thị trường của Việt Nam.</p>
             </div>
@@ -470,9 +517,9 @@
                 <p>Ngày xuất bản: <span id="publishDate">Tháng 5, 2024</span></p> 
                 <p>Tổ chức sản xuất: <span>Nghiên cứu Pháp luật Việt Nam</span></p>
                 <p>Nội dung & Biên soạn: <span>Ban Biên tập Chuyên đề</span></p>
-                <p>Trình bày & Thiết kế: <span>AI Legal Infographics</span></p>
+                <p>Trình bày & Thiết kế: <span>Công ty TNHH Một mình tôi</span></p>
             </div>
-            <p class="footer-copyright">&copy; <span id="currentYear"></span> Toàn bộ bản quyền thuộc về đơn vị chủ quản.</p>
+            <p class="footer-copyright">&copy; <span id="currentYear"></span> Toàn bộ bản quyền thuộc về người nào đó.</p>
         </div>
     </footer>
 
@@ -489,18 +536,20 @@
             let navHeight = stickyNav ? stickyNav.offsetHeight + 20 : 90; 
 
             function getSectionId(sectionElement) {
-                // If section-intro-fullwidth, try to associate with the next main section for nav highlighting
-                if (sectionElement.classList.contains('section-intro-fullwidth')) {
-                    let nextEl = sectionElement.nextElementSibling;
-                    while(nextEl) {
-                        if (nextEl.tagName === 'SECTION' && nextEl.id) {
-                            return nextEl.id;
-                        }
-                        nextEl = nextEl.nextElementSibling;
+                if (sectionElement.id && document.querySelector('main section#' + sectionElement.id)) return sectionElement.id;
+                
+                let currentElement = sectionElement;
+                while(currentElement){
+                    if(currentElement.tagName === 'SECTION' && currentElement.id && document.querySelector('main section#' + currentElement.id)) {
+                        return currentElement.id;
                     }
-                }
-                if (sectionElement.id && document.querySelector('main section#' + sectionElement.id)) {
-                     return sectionElement.id;
+                    let nextMainSection = currentElement.nextElementSibling;
+                    while(nextMainSection && nextMainSection.tagName !== 'SECTION' && !nextMainSection.id){
+                        nextMainSection = nextMainSection.nextElementSibling;
+                    }
+                    if(nextMainSection && nextMainSection.id && document.querySelector('main section#' + nextMainSection.id)) return nextMainSection.id;
+
+                    currentElement = currentElement.previousElementSibling; 
                 }
                 return null;
             }
@@ -516,9 +565,7 @@
                     const sectionCenter = rect.top + rect.height / 2;
                     const distance = Math.abs(sectionCenter - viewportCenter);
 
-                    // Section is considered "in view" if a good portion of it is visible
-                    // or its center is close to the viewport center
-                    if (rect.top < viewportCenter + (rect.height * 0.2) && rect.bottom > viewportCenter - (rect.height * 0.2) ) {
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
                          if (distance < minDistanceToViewportCenter) {
                             minDistanceToViewportCenter = distance;
                             currentSectionId = getSectionId(section);
