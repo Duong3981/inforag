@@ -3,39 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Trải nghiệm scrollytelling về pháp luật đấu giá hàng hóa tại Việt Nam, với thiết kế chuyên nghiệp, màu sắc tươi mới và sửa lỗi hiển thị biểu đồ.">
-    <title>Scrollytelling Professional & Fresh: Đấu Giá Hàng Hóa tại Việt Nam</title>
+    <meta name="description" content="Trải nghiệm scrollytelling về pháp luật đấu giá hàng hóa tại Việt Nam, với thiết kế chuyên nghiệp, màu sắc tươi mới và sửa lỗi hiển thị bố cục khi zoom.">
+    <title>Scrollytelling Layout Fix: Đấu Giá Hàng Hóa tại Việt Nam</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <!--
-    NARRATIVE PLAN & STRUCTURE: Maintained, focus on aesthetic redesign and major bug fix for chart.
-
-    VISUALIZATION & INTERACTION:
-    - Scroll-triggered animations.
-    - Professional and fresh color palette.
-    - Chart.js with new professional colors, chart display fixed.
-    - Gemini API integration.
-
-    CONFIRMATION: NO SVG, NO MERMAID JS. Chart.js (Canvas), HTML/CSS, JS for scroll effects.
-    NEW PROFESSIONAL & FRESH COLOR PALETTE:
-        - Main Background: #F7F9FC (Alice Blue - Very Light Grayish Blue)
-        - Hero/Footer Background: #0D47A1 (Dark Blue - Classic Professional)
-        - Hero H1/Footer Text: #FFFFFF
-        - Section Titles: #1565C0 (Medium Blue - Professional)
-        - Sub-Section Titles: #42A5F5 (Lighter Blue - Fresh) or #26A69A (Teal - Professional Fresh)
-        - Content Block Light: #FFFFFF (White) with border #CFD8DC (Blue Gray - Subtle)
-        - Content Block Dark (for emphasis): #E3F2FD (Very Light Blue) with border #90CAF9 (Light Blue)
-        - Accent Text (for important notes, not errors): #FF8A65 (Light Coral - Soft Warm Accent)
-        - Highlight Stat: #26A69A (Teal)
-        - Chart Bar Colors: ['#42A5F5', '#FFCA28', '#26A69A', '#66BB6A'] (Lighter Blue, Light Amber, Teal, Light Green)
-        - Gemini Button: #1976D2 (Medium Blue)
-        - Gemini Output: #E0F2F1 (Very Light Teal/Mint)
-    FONTS:
-        - Headings: Merriweather (Serif)
-        - Body: Open Sans (Sans-serif)
+    NARRATIVE PLAN & STRUCTURE: Maintained.
+    VISUALIZATION & INTERACTION: Focus on fixing layout issues when zoomed out. Color palette remains "Professional & Fresh".
+    CONFIRMATION: NO SVG, NO MERMAID JS.
+    KEY FIX: Horizontal padding moved from full-width sections to inner max-width containers.
     -->
     <style>
         html {
@@ -43,42 +22,50 @@
         }
         body {
             font-family: 'Open Sans', sans-serif;
-            background-color: #F7F9FC; /* Alice Blue - Very Light Grayish Blue */
-            color: #37474F; /* Blue Grey 800 - Darker for text */
+            background-color: #F7F9FC; 
+            color: #37474F; 
             line-height: 1.75; 
             overflow-x: hidden; 
         }
-        .main-content-area { 
-            max-width: 780px; 
+        /* Wrapper for max-width and horizontal padding, used inside full-width sections */
+        .content-wrapper {
+            max-width: 780px;
             margin-left: auto;
             margin-right: auto;
+            width: 100%; /* Ensures it's responsive within its max-width */
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
         }
+
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Merriweather', serif;
         }
+        
         /* Hero Section */
         .hero-section {
             min-height: 100vh;
-            background-color: #0D47A1; /* Dark Blue - Classic Professional */
+            background-color: #0D47A1; 
             color: #FFFFFF;
-            display: flex;
+            display: flex; 
             flex-direction: column;
             justify-content: center;
-            align-items: center;
+            align-items: center; /* Centers the .content-wrapper horizontally if it's narrower */
             text-align: center;
-            padding: 2rem;
+            width: 100%; 
+            /* Removed horizontal padding, vertical padding can be on .content-wrapper or here */
+            padding-top: 2rem;
+            padding-bottom: 2rem;
         }
-        .hero-section h1 {
+        .hero-section .content-wrapper h1 { /* Target h1 specifically inside hero's content-wrapper */
             color: #FFFFFF;
             font-size: 2.8rem; 
             font-weight: 700;
             margin-bottom: 1rem;
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
-        .hero-section p {
+        .hero-section .content-wrapper p {
             font-size: 1.15rem;
-            color: #E3F2FD; /* Very Light Blue */
-            max-width: 680px;
+            color: #E3F2FD; 
         }
         .hero-section .scroll-prompt {
             color: #FFFFFF; 
@@ -98,29 +85,31 @@
         /* Scroll Sections */
         .scroll-section {
             min-height: 90vh; 
-            padding: 4rem 1.5rem; 
+            padding-top: 4rem; 
+            padding-bottom: 4rem; 
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center; 
+            align-items: center; /* This will center the .content-wrapper */
             text-align: center; 
             border-bottom: 1px solid #E0E0E0; 
+            width: 100%;
         }
         .scroll-section:last-child {
             border-bottom: none;
             min-height: 40vh; 
         }
-        .scroll-section.align-left { 
-            align-items: flex-start;
+        .scroll-section.align-left .content-wrapper { /* If content inside wrapper needs to be left-aligned */
             text-align: left;
         }
         .section-title-scrolly {
             font-size: 2.2rem; 
             font-weight: 700;
             margin-bottom: 2rem; 
-            color: #1565C0; /* Medium Blue - Professional */
+            color: #1565C0; 
             position: relative;
             padding-bottom: 0.5rem;
+            /* For centered title, this is fine. If title is left-aligned, adjust ::after */
         }
         .section-title-scrolly::after { 
             content: '';
@@ -130,86 +119,87 @@
             transform: translateX(-50%);
             width: 70px;
             height: 3.5px;
-            background-color: #FFCA28; /* Light Amber */
+            background-color: #FFCA28; 
             border-radius: 2px;
+        }
+        .scroll-section.align-left .section-title-scrolly {
+            align-self: flex-start; /* Align title to the start of the flex container if section is align-left */
+             text-align: left;
         }
         .scroll-section.align-left .section-title-scrolly::after {
             left: 0;
             transform: translateX(0);
         }
 
+
         .sub-section-title-scrolly {
             font-size: 1.65rem; 
             font-weight: 700;
-            color: #42A5F5; /* Lighter Blue - Fresh */
+            color: #42A5F5; 
             margin-top: 1.6rem;
             margin-bottom: 1.1rem;
         }
-        .content-block .sub-section-title-scrolly { /* More specific for content blocks */
-             color: #1E88E5; /* Slightly darker blue for titles in light blocks */
+        .content-block .sub-section-title-scrolly {
+             color: #1E88E5; 
         }
-
-
-        /* Content Blocks - Professional & Fresh Style */
+        
+        /* Content Blocks are children of .content-wrapper, so their width is relative to it */
         .content-block {
             background-color: #FFFFFF; 
             padding: 1.8rem; 
             border-radius: 10px; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.06); 
             margin-bottom: 2rem;
-            width: 100%;
-            max-width: 700px; 
+            /* width: 100%; No need for width 100% if it's a block element inside .content-wrapper */
             text-align: left; 
-            border: 1px solid #CFD8DC; /* Blue Gray - Subtle border */
+            border: 1px solid #CFD8DC; 
             color: #37474F;
         }
 
          .content-block-dark { 
-            background-color: #E3F2FD; /* Very Light Blue */
-            color: #263238; /* Darker Blue Grey for text */
+            background-color: #E3F2FD; 
+            color: #263238; 
             padding: 1.8rem;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.06); 
             margin-bottom: 2rem;
-            width: 100%;
-            max-width: 700px;
             text-align: left;
-            border: 1px solid #90CAF9; /* Light Blue border */
+            border: 1px solid #90CAF9; 
         }
         .content-block-dark h3, .content-block-dark .sub-section-title-scrolly {
-            color: #0D47A1; /* Dark Blue for titles on light blue blocks */
+            color: #0D47A1; 
         }
         .content-block-dark p, .content-block-dark li {
             color: #37474F; 
         }
         .content-block-dark .accent-text-scrolly {
-             color: #FF8A65; /* Light Coral */
+             color: #FF8A65; 
         }
 
         .accent-text-scrolly {
-            color: #FF8A65; /* Light Coral - Soft Warm Accent */
+            color: #FF8A65; 
             font-weight: 600;
         }
         .highlight-stat-scrolly {
             font-family: 'Merriweather', serif;
             font-size: 3.8rem; 
             font-weight: 700; 
-            color: #26A69A; /* Teal */
+            color: #26A69A; 
             line-height: 1;
             margin: 1.1rem 0;
         }
-        /* Flow Diagram - Professional & Fresh Style */
+        
         .flow-diagram-container-scrolly {
             background-color: #FFFFFF; 
             padding: 1.6rem;
             border-radius: 8px;
-            border: 1px solid #B0BEC5; /* Blue Grey Lighten-2 */
-            width: 100%;
-            max-width: 650px; 
+            border: 1px solid #B0BEC5; 
+            /* max-width: 650px; Already constrained by parent .content-wrapper */
             box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            margin-top: 1rem; /* Added margin for spacing */
         }
         .flow-step-scrolly {
-            background-color: #F7F9FC; /* Alice Blue background for steps */
+            background-color: #F7F9FC; 
             color: #37474F;
             padding: 0.8rem 1rem;
             border-radius: 6px; 
@@ -224,13 +214,13 @@
             margin-right: 0.75rem;
             font-size: 1.15rem;
         }
-        .flow-step-scrolly.problem { border-left: 4px solid #FF8A65; /* Light Coral */ }
+        .flow-step-scrolly.problem { border-left: 4px solid #FF8A65; }
         .flow-step-scrolly.problem .icon { color: #FF8A65; }
-        .flow-step-scrolly.solution { border-left: 4px solid #26A69A; /* Teal */ }
+        .flow-step-scrolly.solution { border-left: 4px solid #26A69A; }
         .flow-step-scrolly.solution .icon { color: #26A69A; }
 
         .flow-arrow-scrolly {
-            font-size: 1.5rem; color: #78909C; /* Blue Grey */
+            font-size: 1.5rem; color: #78909C; 
             text-align: center; margin: 0.75rem 0;
             display: flex; justify-content: center; align-items: center; height: 35px; 
         }
@@ -238,34 +228,32 @@
             writing-mode: horizontal-tb; transform: none; margin: 0 0.5rem; 
          }
 
-        /* Chart Container and Chart Fix */
         .chart-container-scrolly {
             position: relative;
-            width: 100%; /* Take full width of its parent */
-            max-width: 580px; /* But not wider than this */
-            margin: 2rem auto; 
-            height: 400px; /* Fixed height for better control, adjust if needed */
+            width: 100%; 
+            max-width: 580px; 
+            margin: 2rem auto; /* This centers it if its parent (.content-wrapper) is wider */
+            height: 400px; 
             background-color: #FFFFFF;
             padding: 1.5rem; 
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.06);
             border: 1px solid #CFD8DC;
-            overflow: hidden; /* Prevent content spill */
+            overflow: hidden; 
         }
          .chart-container-scrolly .sub-section-title-scrolly {
             margin-top: 0; 
             margin-bottom: 1rem;
-            text-align: center; /* Center chart title */
+            text-align: center; 
         }
-        .chart-canvas-wrapper { /* New wrapper for canvas */
+        .chart-canvas-wrapper { 
             position: relative;
-            height: calc(100% - 40px); /* Adjust based on title height */
+            height: calc(100% - 50px); /* Adjusted for title and potential bottom text */
             width: 100%;
         }
 
-
         .gemini-button-scrolly {
-            background-color: #1976D2; /* Medium Blue */
+            background-color: #1976D2; 
             color: #FFFFFF; 
             padding: 0.7rem 1.4rem; 
             border-radius: 8px; 
@@ -275,18 +263,18 @@
             box-shadow: 0 2px 5px rgba(25, 118, 210, 0.25);
         }
         .gemini-button-scrolly:hover { 
-            background-color: #1565C0; /* Darker Medium Blue */
+            background-color: #1565C0; 
             transform: translateY(-1.5px); 
         }
         .gemini-button-scrolly .icon { margin-right: 0.5rem; font-size: 1.1em; }
 
         .gemini-output-scrolly {
             margin-top: 1.6rem; padding: 1.5rem; 
-            background-color: #E0F2F1; /* Very Light Teal/Mint */
+            background-color: #E0F2F1; 
             border-radius: 8px;
-            font-size: 0.9rem; color: #00695C; /* Dark Teal text */
+            font-size: 0.9rem; color: #00695C; 
             min-height: 75px; 
-            border: 1px solid #B2DFDB; /* Light Teal border */
+            border: 1px solid #B2DFDB; 
             line-height: 1.65;
         }
         .list-disc, .list-decimal { padding-left: 1.5rem; text-align: left; }
@@ -302,13 +290,19 @@
             transform: translateY(0);
         }
         .page-footer-scrolly {
-            background-color: #0D47A1; /* Dark Blue */
-            color: #B0BEC5; /* Blue Grey Lighten-1 */
-            padding: 3rem 1rem; 
+            background-color: #0D47A1; 
+            color: #B0BEC5; 
+            padding-top: 3rem; 
+            padding-bottom: 3rem; 
             text-align: center;
+            width: 100%;
         }
-        .page-footer-scrolly p { margin-bottom: 0.6rem; font-size: 0.85rem; }
-        .page-footer-scrolly .disclaimer { font-style: italic; color: #78909C; } 
+        .page-footer-scrolly .content-wrapper p { /* Target p inside footer's content-wrapper */
+             margin-bottom: 0.6rem; font-size: 0.85rem;
+        }
+        .page-footer-scrolly .content-wrapper .disclaimer { 
+            font-style: italic; color: #78909C; 
+        }
 
         @media (min-width: 1600px) {
             body { max-width: 1400px; margin-left: auto; margin-right: auto; }
@@ -317,14 +311,16 @@
 </head>
 <body>
     <header class="hero-section">
-        <h1 class="scroll-reveal">Đấu Giá Hàng Hóa tại Việt Nam</h1>
-        <p class="scroll-reveal" style="transition-delay: 0.2s;">Hành Trình Pháp Lý, Thực Tiễn và Hướng Tới Tương Lai Minh Bạch</p>
-        <p class="mt-8 scroll-reveal scroll-prompt" style="transition-delay: 0.4s;">👇 Cuộn xuống để khám phá 👇</p>
+        <div class="content-wrapper">
+            <h1 class="scroll-reveal">Đấu Giá Hàng Hóa tại Việt Nam</h1>
+            <p class="scroll-reveal" style="transition-delay: 0.2s;">Hành Trình Pháp Lý, Thực Tiễn và Hướng Tới Tương Lai Minh Bạch</p>
+            <p class="mt-8 scroll-reveal scroll-prompt" style="transition-delay: 0.4s;">👇 Cuộn xuống để khám phá 👇</p>
+        </div>
     </header>
 
     <main>
         <section id="scene1-mo-dau" class="scroll-section align-left">
-            <div class="main-content-area">
+            <div class="content-wrapper">
                 <h2 class="section-title-scrolly scroll-reveal">Lời Mở Đầu: Một "Cú Hích" và Nhu Cầu Cấp Thiết</h2>
                 <div class="content-block scroll-reveal">
                     <h3 class="sub-section-title-scrolly">Thị Trường Nghệ Thuật Ghi Dấu Ấn Lịch Sử</h3>
@@ -345,7 +341,7 @@
         </section>
 
         <section id="scene2-ban-chat-khai-quat" class="scroll-section align-left">
-            <div class="main-content-area">
+            <div class="content-wrapper">
                 <h2 class="section-title-scrolly scroll-reveal">Bản Chất Đấu Giá Hàng Hóa: Khái Quát Pháp Lý</h2>
                 <div class="content-block scroll-reveal">
                     <p class="mb-3 text-md">Theo Khoản 1 Điều 185 Luật Thương mại 2005, đấu giá hàng hoá được định nghĩa:</p>
@@ -363,7 +359,7 @@
         </section>
 
         <section id="scene3-ban-chat-dac-diem" class="scroll-section align-left">
-            <div class="main-content-area">
+            <div class="content-wrapper">
                  <h2 class="section-title-scrolly scroll-reveal">Bản Chất Đấu Giá Hàng Hóa: Những Đặc Điểm Cốt Lõi</h2>
                 <div class="grid md:grid-cols-2 gap-6"> 
                     <div class="content-block scroll-reveal">
@@ -386,7 +382,7 @@
         </section>
 
         <section id="scene4-ban-chat-vai-tro" class="scroll-section align-left">
-            <div class="main-content-area">
+            <div class="content-wrapper">
                 <h2 class="section-title-scrolly scroll-reveal">Vai Trò Quan Trọng Của Đấu Giá Hàng Hóa</h2>
                 <div class="content-block-dark scroll-reveal">
                     <ul class="space-y-3 text-md">
@@ -401,7 +397,7 @@
         </section>
 
         <section id="scene5-phap-ly-giam-dinh" class="scroll-section align-left">
-            <div class="main-content-area">
+            <div class="content-wrapper">
                 <h2 class="section-title-scrolly scroll-reveal">Thực Trạng Pháp Lý: Vấn Đề Giám Định Hàng Hóa</h2>
                 <div class="content-block scroll-reveal">
                     <h3 class="sub-section-title-scrolly">Thực trạng còn tồn tại</h3>
@@ -417,7 +413,7 @@
         </section>
 
         <section id="scene6-phap-ly-quyen-so-huu" class="scroll-section align-left">
-            <div class="main-content-area">
+            <div class="content-wrapper">
                 <h2 class="section-title-scrolly scroll-reveal">Thực Trạng Pháp Lý: Chuyển Giao Quyền Sở Hữu</h2>
                 <div class="content-block scroll-reveal">
                     <h3 class="sub-section-title-scrolly">Thực trạng còn tồn tại</h3>
@@ -450,7 +446,7 @@
         </section>
 
         <section id="scene7-phap-ly-hop-dong" class="scroll-section align-left">
-            <div class="main-content-area">
+            <div class="content-wrapper">
                 <h2 class="section-title-scrolly scroll-reveal">Thực Trạng Pháp Lý: Hợp Đồng Đấu Giá</h2>
                 <div class="content-block scroll-reveal">
                     <h3 class="sub-section-title-scrolly">Vấn đề hiệu lực hợp đồng</h3>
@@ -468,7 +464,7 @@
         </section>
 
         <section id="scene8-dau-gia-truc-tuyen-khai-quat" class="scroll-section align-left">
-            <div class="main-content-area">
+            <div class="content-wrapper">
                 <h2 class="section-title-scrolly scroll-reveal">Đấu Giá Trực Tuyến: Xu Hướng Tất Yếu</h2>
                 <div class="content-block scroll-reveal">
                     <h3 class="sub-section-title-scrolly">Ghi Nhận Pháp Lý Bước Đầu</h3>
@@ -486,7 +482,7 @@
         </section>
 
         <section id="scene9-dau-gia-truc-tuyen-bat-cap" class="scroll-section align-left">
-            <div class="main-content-area">
+            <div class="content-wrapper">
                 <h2 class="section-title-scrolly scroll-reveal">Đấu Giá Trực Tuyến: Thách Thức và Kiến Nghị</h2>
                 <div class="content-block-dark scroll-reveal">
                     <h3 class="sub-section-title-scrolly">Những bất cập chính</h3>
@@ -510,7 +506,7 @@
         </section>
 
         <section id="scene10-ket-luan" class="scroll-section">
-             <div class="main-content-area">
+             <div class="content-wrapper">
                 <h2 class="section-title-scrolly scroll-reveal">Kết Luận và Định Hướng Tương Lai</h2>
                 <div class="content-block scroll-reveal">
                     <p class="text-lg mb-5 leading-relaxed">Hoạt động đấu giá hàng hóa, cả truyền thống và trực tuyến, nắm giữ tiềm năng to lớn trong việc thúc đẩy minh bạch thị trường và hiệu quả kinh tế tại Việt Nam. Để tiềm năng này được khai thác tối đa, việc <span class="font-semibold accent-text-scrolly">tiếp tục nghiên cứu, hoàn thiện khung pháp lý</span> là yêu cầu tiên quyết.</p>
@@ -521,7 +517,7 @@
     </main>
 
     <footer class="page-footer-scrolly">
-        <div class="main-content-area">
+        <div class="content-wrapper">
             <p>&copy; 2025 Phân tích Pháp luật Đấu giá Hàng hóa Việt Nam (Mô phỏng).</p>
             <p class="disclaimer">Thông tin trên trang này chỉ mang tính chất tham khảo, nghiên cứu học thuật và không cấu thành tư vấn pháp lý chuyên nghiệp. Vui lòng liên hệ luật sư hoặc chuyên gia pháp lý để được tư vấn cụ thể.</p>
             <p>Nguồn tham khảo chính: Tiểu luận về Đấu giá Hàng hóa và các quy định pháp luật liên quan.</p>
@@ -547,7 +543,7 @@
         }
 
         const chartTextPrimaryColor = '#37474F'; 
-        const chartGridLineColor = 'rgba(55, 71, 79, 0.1)';
+        const chartGridLineColor = 'rgba(55, 71, 79, 0.08)';
 
         const commonChartOptions = {
             responsive: true,
@@ -557,9 +553,9 @@
                 tooltip: {
                     titleFont: { family: "'Merriweather', serif", weight: '700', size: 13 }, 
                     bodyFont: { family: "'Open Sans', sans-serif", size: 11 },
-                    backgroundColor: 'rgba(21, 101, 192, 0.9)',  // Medium Blue for tooltip
+                    backgroundColor: 'rgba(13, 71, 161, 0.9)',  // Dark Blue for tooltip
                     titleColor: '#FFFFFF', 
-                    bodyColor: '#E3F2FD', // Very Light Blue for body
+                    bodyColor: '#E3F2FD', 
                     padding: 10,
                     cornerRadius: 5,
                     boxPadding: 3,
@@ -595,13 +591,13 @@
             datasets: [{
                 label: 'Mức độ ưu việt (Thang 5)',
                 data: [4.5, 4.8, 5, 4.7], 
-                backgroundColor: ['#42A5F5', '#FFCA28', '#26A69A', '#66BB6A'], // Lighter Blue, Light Amber, Teal, Light Green
+                backgroundColor: ['#42A5F5', '#FFCA28', '#26A69A', '#66BB6A'], 
                 borderColor: '#FFFFFF', borderWidth: 0, borderRadius: 5, barThickness: 'flex', maxBarThickness: 28,
             }]
         };
         const advantagesChartCtx = document.getElementById('advantagesChart');
         if (advantagesChartCtx) {
-            new Chart(advantagesChartCtx.getContext('2d'), { // Ensure getContext('2d')
+            new Chart(advantagesChartCtx.getContext('2d'), { 
                 type: 'bar', data: advantagesData,
                 options: { ...commonChartOptions, indexAxis: 'y' }
             });
