@@ -7,69 +7,147 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- Application Structure Plan: 
-        Theme: Evolution of Vietnamese Auction Law (LTM 2005 focus).
-        Structure: Single-page scrollable infographic with a modern, professional aesthetic.
-        Sections:
-        1. Hero Section.
-        2. Sticky Navigation.
-        3. Content Sections:
-            - Giới Thiệu: Definition styled with refined blockquote.
-            - Dòng Thời Gian.
-            - Động Lực LTM 2005.
-            - LTM 2005 - Trụ Cột.
-            - So Sánh Luật.
-            - Thách Thức & Tương Lai.
-            - Kết Luận.
-        4. Footer.
-        Animations: Replay on scroll. Section headings unified. Timeline icons updated. Blockquote style refined.
-    -->
-    <!-- Visualization & Content Choices:
-        * Blockquote styling for definition text further refined: quote mark color changed to accent gold, position adjusted for better visual appeal. Vertical bar color also changed to accent gold. Quote text font changed to EB Garamond.
-        * No SVG, No Mermaid JS, No Chart.js/Plotly.js.
-    -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Source Sans Pro', sans-serif; background-color: #F4F6F8; color: #263238; line-height: 1.75; font-size: 17px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        h1, h2, h3, h4, h5, h6 { font-family: 'EB Garamond', serif; letter-spacing: -0.01em; }
+        html {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 17px;
+            line-height: 1.75;
+            color: #263238;
+            background-color: #F4F6F8;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            scroll-behavior: smooth;
+        }
+
+        body {}
         
-        h1 { font-size: 32px; font-weight: 700; color: #004D40; } 
+        h1, h2, h3, h4, h5, h6 { 
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: -0.01em; 
+        }
+        
+        h1 { font-size: 32px; font-weight: 700; color: #004D40; }
         h2 { 
             font-size: 28px; 
             font-weight: 700; 
             color: #004D40; 
-            margin-bottom: 2rem; 
-            padding-bottom: 0.5rem; 
-            border-bottom: 3px solid #B2DFDB; 
-            display: flex;
-            align-items: baseline; 
+            margin-bottom: 1.25rem; /* Default margin-bottom for h2 */
+        }
+        h2 p { /* The <p> tag inside <h2> carries the border */
+            display: inline-flex; 
+            align-items: baseline;
+            margin-bottom: 0; 
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            padding-bottom: 0.3rem; 
+            border-bottom: 4px solid #FFA000; 
+            position: relative; 
         }
         h2 .roman-numeral {
             font-size: 30px; 
-            color: #FFA000; 
-            margin-right: 0.75rem; 
+            color: #004D40; 
+            margin-right: 0.85rem; 
+            font-family: 'Montserrat', sans-serif;
             font-weight: 700; 
             line-height: 1;
             flex-shrink: 0; 
         }
         h3 { font-size: 22px; font-weight: 600; color: #00695C; margin-bottom: 1rem; }
 
-        @media (min-width: 768px) { /* md breakpoint */
-            body { font-size: 17px; }
-            h1 { font-size: 44px; }
-            h2 { font-size: 34px; margin-bottom: 2.5rem; padding-bottom: 1rem;}
-            h2 .roman-numeral { font-size: 38px; margin-right: 0.85rem; }
+        @media (min-width: 768px) {
+            h1 { font-size: 44px; font-weight: 800; }
+            h2 { font-size: 34px; margin-bottom: 2rem; /* Default margin-bottom for h2 on larger screens */ }
+            h2 p { padding-bottom: 0.4rem; }
+            h2 .roman-numeral { font-size: 36px; margin-right: 0.95rem; }
             h3 { font-size: 26px; margin-bottom: 1.25rem; }
         }
+        
+        .section-intro-fullwidth .content-wrapper {
+             text-align: center; 
+        }
+        
+        .section-intro-fullwidth h2 {
+            margin-bottom: 2.5rem; /* Increased margin-bottom for h2 in intro sections */
+        }
+        @media (min-width: 768px) {
+            .section-intro-fullwidth h2 {
+                margin-bottom: 3rem; /* Further increase for larger screens */
+            }
+        }
 
-        .section-intro-fullwidth h2 { color: #004D40; border-bottom-color: #00695C; }
-        .section-intro-fullwidth h2 .roman-numeral { color: #FFA000; }
+        .section-intro-fullwidth h2 p { 
+            border-bottom: none; 
+            padding-bottom: 0.2rem; 
+            position: relative; 
+        }
+        .section-intro-fullwidth h2 p::after { 
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px; 
+            width: 100%;
+            height: 4px; 
+            background-color: #00796B; 
+        }
+
+        @media (min-width: 768px) {
+            .section-intro-fullwidth h2 p {
+                padding-bottom: 0.3rem; 
+            }
+             .section-intro-fullwidth h2 p::after {
+                bottom: -2px; 
+             }
+        }
+        .section-intro-fullwidth h2 .roman-numeral {
+            color: #FFA000; 
+        }
         
-        #ket-luan .card h2 { color: #FFFFFF !important; border-bottom: none; text-align:center; margin-bottom: 1.5rem;}
-        #ket-luan .card h2 .roman-numeral { color: #FFD54F !important; }
+        #ket-luan .card h2 { 
+            color: #FFFFFF !important; 
+            text-align:center; 
+            margin-bottom: 1.5rem;
+        }
+        #ket-luan .card h2 p { 
+            color: #FFFFFF !important; 
+            font-weight: 700;
+            border-bottom: none !important; 
+        }
+        #ket-luan .card h2 p::after { 
+            display: none;
+        }
+        #ket-luan .card h2 .roman-numeral { 
+            color: #FFD54F !important; 
+        }
         
-        p, ul, ol, table { margin-bottom: 1.5rem; }
+        p, ul, ol, li, .hero-section p, 
+        .card p, .timeline-content p, .table-professional td, 
+        .footer-credits p, .footer-copyright { 
+            font-family: 'Open Sans', sans-serif; 
+            margin-bottom: 1.5rem;
+        }
+        .section-intro-fullwidth > .content-wrapper > p:not(h2 p) {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 17px;
+            color: #004D40;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            margin-top: 0; 
+        }
+        @media (min-width: 768px) {
+           .section-intro-fullwidth > .content-wrapper > p:not(h2 p) {
+                font-size: 18px;
+            }
+        }
+
         ul, ol { padding-left: 1.75rem; }
+        .timeline-icon {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 10px;
+        }
 
         .content-wrapper { max-width: 1100px; margin-left: auto; margin-right: auto; padding-left: 1rem; padding-right: 1rem; }
         @media (min-width: 640px) { .content-wrapper { padding-left: 1.5rem; padding-right: 1.5rem; } }
@@ -78,37 +156,42 @@
         .section-padding { padding-top: 3rem; padding-bottom: 3rem; } 
         @media (min-width: 768px) { .section-padding { padding-top: 4rem; padding-bottom: 4rem; } }
 
-        .hero-section { background-color: #004D40; color: #FFFFFF; text-align: center; padding: 3rem 1rem; } 
+        .hero-section {
+            background-image: linear-gradient(135deg, #004D40 0%, #00695C 70%, #00796B 100%); 
+            color: #FFFFFF; text-align: center; padding: 3rem 1rem;
+        } 
         .hero-section h1 { color: #FFFFFF; font-size: 36px; margin-bottom: 0.75rem; } 
-        .hero-section p { font-size: 18px; color: #E0F2F1; max-width: 700px; margin-left: auto; margin-right: auto; } 
         @media (min-width: 768px) {
             .hero-section { padding: 5rem 2rem; }
             .hero-section h1 { font-size: 52px; margin-bottom: 1rem; }
-            .hero-section p { font-size: 20px; }
+            .hero-section p { font-size: 20px; } 
         }
 
-        .card { background-color: #FFFFFF; border-radius: 10px; padding: 20px 25px; box-shadow: 0 5px 15px rgba(0,77,64,0.08); margin-bottom: 2rem; border: 1px solid #E0E0E0; }
-         @media (min-width: 768px) { .card { padding: 30px 35px; } }
+        .card {
+            background-color: #FFFFFF; border-radius: 12px; 
+            padding: 20px 25px;
+            box-shadow: 0 4px 8px rgba(0,77,64,0.06), 0 10px 20px rgba(0,77,64,0.1); 
+            margin-bottom: 2rem; border: 1px solid #E0E0E0;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+        }
+        .card:hover {
+            transform: translateY(-5px) scale(1.01); 
+            box-shadow: 0 6px 12px rgba(0,77,64,0.09), 0 15px 30px rgba(0,77,64,0.18); 
+        }
+        @media (min-width: 768px) { .card { padding: 30px 35px; } }
         .card-accent-top-border { border-top: 4px solid #FFA000; }
         
         .sticky-nav { 
-            position: sticky; 
-            top: 0; 
-            background-color: #FFFFFF; 
-            z-index: 1000; 
-            box-shadow: 0 5px 15px rgba(0,77,64,0.12); 
+            position: sticky; top: 0; background-color: #FFFFFF; 
+            z-index: 1000; box-shadow: 0 5px 15px rgba(0,77,64,0.12); 
             border-bottom: 1px solid #CFD8DC; 
         }
         .nav-link { 
-            color: #004D40; 
-            font-weight: 700; 
-            font-size: 14px; 
-            transition: all 0.25s ease-in-out; 
-            padding: 0.6rem 0.4rem;  
-            border-radius: 6px; 
-            text-decoration: none;
-            margin: 0 0.1rem; 
-            white-space: nowrap; 
+            font-family: 'Montserrat', sans-serif; color: #004D40; 
+            font-weight: 600; font-size: 14px; 
+            transition: all 0.25s ease-in-out; padding: 0.6rem 0.4rem;  
+            border-radius: 6px; text-decoration: none;
+            margin: 0 0.1rem; white-space: nowrap; 
         }
         @media (min-width: 640px) { .nav-link { font-size: 15px; padding: 0.75rem 0.75rem; margin: 0 0.2rem;} }
         @media (min-width: 1024px) { .nav-link { font-size: 17px; padding: 0.9rem 1.1rem; margin: 0 0.25rem;} }
@@ -121,83 +204,135 @@
         .timeline-item { position: relative; margin-bottom: 3rem; padding-left: 70px; } 
         .timeline-item:last-child { margin-bottom: 0; }
         .timeline-icon { 
-            position: absolute; 
-            left: 0; 
-            top: 0px; 
-            width: 48px; 
-            height: 48px; 
-            background-color: #FFA000; 
-            border-radius: 50%; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            color: #004D40; 
-            font-weight: 600; 
-            font-family: 'Source Sans Pro', sans-serif; 
-            font-size: 10px; 
-            line-height: 1.15; 
-            text-align: center; 
-            padding: 3px; 
-            border: 3px solid #FFFFFF; 
-            box-shadow: 0 0 0 4px #FFA000; 
+            position: absolute; left: 0; top: 0px; width: 48px; height: 48px; 
+            background-color: #FFA000; border-radius: 50%; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            color: #004D40; line-height: 1.15; text-align: center; 
+            padding: 3px; border: 3px solid #FFFFFF; 
+            box-shadow: 0 0 0 4px #FFA000;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
         }
+        .timeline-icon:hover { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(255, 160, 0, 0.5); }
         .timeline-content { background-color: #FFFFFF; padding: 20px 25px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.07); border: 1px solid #E0F2F1; }
         
-        .flowchart-step { background-image: linear-gradient(to right, #E0F2F1, #C8E6C9); border: 1px solid #A5D6A7; color: #004D40; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,77,64,0.1); padding: 16px 22px; font-weight: 600; }
-        .flowchart-arrow { text-align: center; margin: 0.75rem 0; }
-        .flowchart-arrow::after { content: '⇓'; color: #00695C; font-size: 2.2em; line-height: 1; opacity: 0.9; }
+        .flowchart-container {
+            max-width: 750px; 
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .flowchart-step-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .flowchart-step {
+            display: flex;
+            align-items: center; 
+            background-image: linear-gradient(to right, #E0F2F1, #C8E6C9);
+            border-left: 5px solid #00796B; 
+            color: #004D40;
+            border-radius: 8px; 
+            box-shadow: 0 5px 15px rgba(0,77,64,0.1); 
+            padding: 20px 25px; 
+            width: 100%;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-left-color 0.25s ease;
+            text-align: left; 
+            margin-bottom: 0.75rem;
+        }
+        .flowchart-step:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0,77,64,0.15);
+            border-left-color: #FFA000;
+        }
+        .step-number-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px; 
+            height: 44px;
+            background-color: #004D40; 
+            color: #FFFFFF;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 20px; 
+            border-radius: 50%;
+            margin-right: 20px; 
+            flex-shrink: 0; 
+            border: 2px solid #FFFFFF; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+        }
+        .step-text {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 17px; 
+            line-height: 1.6;
+            font-weight: 500; 
+            color: #1A202C; 
+        }
+        .step-text .font-semibold {
+             font-family: 'Open Sans', sans-serif;
+             font-weight: 700; 
+             color: #004D40; 
+        }
+
+        .flowchart-arrow {
+            font-size: 2.8em; 
+            color: #00695C; 
+            line-height: 1;
+            margin: 0.5rem auto 1.25rem auto; 
+            opacity: 0.8;
+            transition: transform 0.2s ease;
+        }
+        .flowchart-step-wrapper:hover .flowchart-arrow {
+            transform: translateY(3px);
+        }
+        .flowchart-step-wrapper:last-child .flowchart-arrow {
+            display: none; 
+        }
         
         .accent-text { color: #FFA000; font-weight: 700; }
         .highlight-text { color: #00695C; font-weight: 600; } 
         
         .styled-blockquote {
-            border-left: 4px solid #FFA000; /* Accent gold bar */
-            padding-left: 2rem; /* Increased padding */
-            margin-left: 0.5rem; 
-            margin-top: 1.5rem;
-            margin-bottom: 1.75rem; 
-            position: relative;
+            border-left: 4px solid #FFA000; padding-left: 2rem; margin-left: 0.5rem; 
+            margin-top: 1.5rem; margin-bottom: 1.75rem; position: relative;
         }
         .styled-blockquote p {
-            font-family: 'EB Garamond', serif; /* Serif font for quote */
-            font-style: italic;
-            color: #4A5568; /* Slightly darker gray for better contrast (gray-700 equivalent) */
-            font-size: 1.2em; /* Larger for emphasis */
-            line-height: 1.6; /* Adjusted line height */
-            margin-bottom: 0; 
-            position: relative; 
-            z-index: 1;
+            font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 500; 
+            color: #4A5568; font-size: 1.2em; line-height: 1.6; 
+            margin-bottom: 0; position: relative; z-index: 1;
         }
         .styled-blockquote::before {
-            content: '\“'; 
-            font-family: 'EB Garamond', serif; 
-            font-size: 7rem; /* Larger quote mark */
-            color: #FFA000; /* Accent gold color */
-            position: absolute;
-            left: -0.6em; /* Adjusted to pull it left, slightly overlapping the bar */
-            top: -0.5em;  /* Adjusted for vertical alignment */
-            line-height: 0.8; /* Tighten line height of quote mark */
-            opacity: 0.6; /* Slightly more subtle */
-            z-index: 0; 
+            content: '\“'; font-family: 'Montserrat', sans-serif; font-size: 7rem; 
+            color: #FFA000; position: absolute; left: -0.6em; top: -0.5em;  
+            line-height: 0.8; opacity: 0.6; z-index: 0; 
         }
         .styled-blockquote p span.italic { 
-            color: inherit; 
-            font-family: inherit; 
+            font-family: inherit !important; font-style: inherit !important;
+            font-weight: inherit !important; color: inherit !important;
         }
 
-
-        .table-professional { width: 100%; border-collapse: collapse; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 0; }
-        .table-professional th, .table-professional td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #E0E0E0; font-size: 15px;}
-         @media (min-width: 768px) { .table-professional th, .table-professional td { padding: 16px 20px; font-size: 16px; } }
-        .table-professional td { background-color: #FFFFFF; }
+        .table-professional { width: 100%; border-collapse: collapse; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 1.5rem; }
+        .table-professional th, .table-professional td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #E0E0E0; font-size: 15px; }
+        @media (min-width: 768px) { .table-professional th, .table-professional td { padding: 16px 20px; font-size: 16px; } }
         .table-professional tr:last-child td { border-bottom: none; }
-        .table-professional th { background-color: #E0F2F1; color: #004D40; font-family: 'EB Garamond', serif; font-weight: 700; font-size: 17px; }
-         @media (min-width: 768px) { .table-professional th {font-size: 18px;} }
+        .table-professional th { 
+            font-family: 'Montserrat', sans-serif; background-color: #E0F2F1; color: #004D40; 
+            font-weight: 700; font-size: 17px; 
+        }
+        @media (min-width: 768px) { .table-professional th {font-size: 18px;} }
 
-        .icon-display { font-size: 3rem; color: #004D40; margin-bottom: 1rem; display: block; text-align: center; }
-         @media (min-width: 768px) { .icon-display {font-size: 3.5rem;} }
-
+        .icon-display {
+            font-size: 3.5rem; color: #004D40; margin-bottom: 1rem;
+            display: inline-flex; align-items: center; justify-content: center; text-align: center;
+            padding: 0.5rem; background-color: #E8F5E9; border-radius: 50%; 
+            width: 80px; height: 80px; box-shadow: 0 3px 6px rgba(0,77,64,0.12);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .icon-display:hover { transform: scale(1.1); background-color: #DCEDC8; }
+        @media (min-width: 768px) {
+            .icon-display { font-size: 4rem; width: 90px; height: 90px; }
+        }
 
         .animate-on-scroll { opacity: 0; transition: opacity 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .fade-in-up { transform: translateY(50px); }
@@ -207,52 +342,23 @@
         .is-visible { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
         
         .section-intro-fullwidth { padding: 2.5rem 0; background-color: #E0F2F1; margin-bottom: 2.5rem; } 
-         @media (min-width: 768px) { .section-intro-fullwidth { padding: 3.5rem 0; margin-bottom: 3.5rem;} }
-        .section-intro-fullwidth p { font-size: 17px; color: #004D40; max-width: 800px; margin-left:auto; margin-right:auto; text-align:center; }
-         @media (min-width: 768px) { .section-intro-fullwidth p {font-size: 18px;} }
+        @media (min-width: 768px) { .section-intro-fullwidth { padding: 3.5rem 0; margin-bottom: 3.5rem;} }
 
         #ket-luan .card { background-image: linear-gradient(135deg, #004D40 0%, #00695C 100%);}
-        #ket-luan .card p { font-family: 'Source Sans Pro', sans-serif; color: #E0F2F1; font-size: 18px;} 
-         @media (min-width: 768px) { #ket-luan .card p {font-size: 20px; line-height: 1.8;} }
+        #ket-luan .card p { color: #E0F2F1; font-size: 18px; }
+        @media (min-width: 768px) { #ket-luan .card p {font-size: 20px; line-height: 1.8;} }
         #ket-luan .card .accent-text { color: #FFD54F; } 
         #ket-luan .card .highlight-text { color: #A7FFEB; } 
 
-
         .footer {
-            background-color: #FFFFFF; 
-            color: #263238; 
-            padding: 3rem 0 1.5rem 0; 
-            text-align: center;
-            border-top: 1px solid #CFD8DC;
-            font-size: 14px; 
+            background-color: #FFFFFF; color: #263238; padding: 3rem 0 1.5rem 0; 
+            text-align: center; border-top: 1px solid #CFD8DC; font-size: 14px; 
         }
-         @media (min-width: 768px) { .footer { padding: 4rem 0 2rem 0; font-size: 15px; } }
-        .footer-content-wrapper {
-            max-width: 800px; 
-            margin: 0 auto;
-            padding-left: 1rem; 
-            padding-right: 1rem; 
-        }
-        .footer-line {
-            width: 80px;
-            height: 2px;
-            background-color: #FFA000; 
-            margin: 0 auto 1.5rem auto;
-        }
-        .footer-credits p {
-            margin-bottom: 0.5rem;
-            line-height: 1.6;
-        }
-        .footer-credits span {
-            font-weight: 600;
-            color: #004D40;
-        }
-        .footer-copyright {
-            margin-top: 2rem; 
-            font-size: 13px; 
-            color: #00695C;
-        }
-         @media (min-width: 768px) { .footer-copyright { margin-top: 2.5rem; font-size: 14px; } }
+        @media (min-width: 768px) { .footer { padding: 4rem 0 2rem 0; font-size: 15px; } }
+        .footer-content-wrapper { max-width: 800px; margin: 0 auto; padding-left: 1rem; padding-right: 1rem; }
+        .footer-line { width: 80px; height: 3px; background-color: #FFA000; margin: 0 auto 1.5rem auto; }
+        .footer-credits span { font-weight: 600; color: #004D40; }
+        @media (min-width: 768px) { .footer-copyright { margin-top: 2.5rem; font-size: 14px; } }
     </style>
 </head>
 <body class="antialiased">
@@ -279,7 +385,7 @@
     <main class="content-wrapper">
 
         <section id="gioi-thieu" class="section-padding animate-on-scroll fade-in-up">
-            <h2><p><span class="roman-numeral">I. Giới thiệu chung</h2>
+            <h2><p><span class="roman-numeral">I.</span>Giới thiệu chung</p></h2>
             <p class="mb-8 text-lg leading-relaxed">Đấu giá hàng hóa, một phương thức giao dịch thương mại mang tính đặc thù, giữ vai trò <span class="font-semibold">then chốt</span> trong việc xác lập giá trị thị trường và tạo động lực cho lưu thông hàng hóa. Tại Việt Nam, hệ thống pháp luật điều chỉnh hoạt động này đã không ngừng được hoàn thiện qua các thời kỳ. Trong đó, sự ra đời của <span class="highlight-text">Luật Thương mại năm 2005</span> được xem là một <span class="accent-text">cột mốc pháp lý quan trọng</span>, đặt nền móng vững chắc cho sự phát triển của một thị trường đấu giá minh bạch và chuyên nghiệp hơn.</p>
             <div class="card card-accent-top-border animate-on-scroll scale-in">
                 <h3 class="text-xl">Định nghĩa <span class="highlight-text">Đấu giá Hàng hóa</span> theo Luật Thương mại 2005</h3>
@@ -291,7 +397,7 @@
         
         <div class="section-intro-fullwidth animate-on-scroll fade-in-up">
             <div class="content-wrapper">
-                <h2><p><span class="roman-numeral">II. Dòng thời gian phát triển pháp luật</h2>
+                <h2><p><span class="roman-numeral">II.</span>Dòng thời gian phát triển pháp luật</p></h2>
                 <p>Hành trình pháp lý của hoạt động <span class="highlight-text">đấu giá hàng hóa</span> tại Việt Nam là một quá trình liên tục thích ứng và hoàn thiện, phản ánh sự thay đổi của bối cảnh kinh tế - xã hội qua từng giai đoạn.</p>
             </div>
         </div>
@@ -300,28 +406,28 @@
             <div class="timeline">
                 <div class="timeline-item animate-on-scroll fade-in-left">
                     <div class="timeline-icon">Trước<br>1997</div>
-                    <div class="timeline-content">
+                    <div class="timeline-content card">
                         <h3 class="text-xl"><span class="highlight-text">Giai đoạn Sơ khai & Hình thành</h3>
                         <p>Các quy định pháp luật về đấu giá còn mang tính <span class="accent-text">"điểm xuyết"</span>, chủ yếu nằm rải rác trong các văn bản giải quyết tình huống cụ thể (ví dụ: Quyết định 131/1997/TC-QĐ-VT). Thiếu một khung pháp lý <span class="font-semibold">chuyên biệt và thống nhất</span>.</p>
                     </div>
                 </div>
                 <div class="timeline-item animate-on-scroll fade-in-right">
                     <div class="timeline-icon">1997</div>
-                    <div class="timeline-content">
+                    <div class="timeline-content card">
                         <h3 class="text-xl"><span class="highlight-text">Luật Thương mại 1997</span></h3>
                         <p>Lần đầu tiên hoạt động <span class="highlight-text">đấu giá hàng hóa</span> được đề cập ở cấp độ luật. Tuy nhiên, quy định tại Điều 136 còn <span class="accent-text">khá sơ sài</span>, chủ yếu dẫn chiếu sang Bộ luật Dân sự và "Quy chế bán đấu giá hàng hoá do Chính phủ quy định" (Nghị định 86/CP năm 1996).</p>
                     </div>
                 </div>
                 <div class="timeline-item animate-on-scroll fade-in-left">
                     <div class="timeline-icon">01/<br>2005</div>
-                    <div class="timeline-content">
+                    <div class="timeline-content card">
                         <h3 class="text-xl"><span class="highlight-text">Nghị định 05/2005/NĐ-CP</span></h3>
                         <p>Ban hành Quy chế bán đấu giá tài sản, thay thế Nghị định 86/CP. Văn bản này đã <span class="font-semibold">hệ thống hóa và chi tiết hóa</span> đáng kể các quy định, đưa ra nguyên tắc, hình thức đấu giá đa dạng, tạo <span class="accent-text">tiền đề quan trọng</span> cho <span class="highlight-text">Luật Thương mại 2005</span>.</p>
                     </div>
                 </div>
                 <div class="timeline-item animate-on-scroll fade-in-right">
                     <div class="timeline-icon" style="background-color: #004D40; color: #FFFFFF;">06/<br>2005</div>
-                    <div class="timeline-content card-accent-top-border" style="border-color: #004D40;">
+                    <div class="timeline-content card card-accent-top-border" style="border-color: #004D40;">
                         <h3 class="text-xl" style="color:#004D40;"><span class="highlight-text">Luật Thương mại 2005</span></h3>
                         <p class="font-semibold">Có hiệu lực từ 01/01/2006. Đây là <span class="accent-text">bước ngoặt pháp lý</span>, với Mục 1 Chương VI dành riêng để quy định một cách <span class="font-semibold">chi tiết và toàn diện</span> về hoạt động "<span class="highlight-text">Đấu giá hàng hóa</span>".</p>
                     </div>
@@ -331,8 +437,8 @@
 
         <div class="section-intro-fullwidth animate-on-scroll fade-in-up">
             <div class="content-wrapper">
-                 <h2><p><span class="roman-numeral">III. Động lực ra đời Luật thương mại 2005</span></h2>
-                 <p>Việc hoàn thiện khung pháp lý về <span class="highlight-text">đấu giá hàng hóa</span> trong <span class="highlight-text">Luật Thương mại 2005</span> xuất phát từ những yêu cầu cấp thiết của thực tiễn kinh tế và hội nhập.</p>
+                <h2><p><span class="roman-numeral">III.</span>Động lực ra đời Luật thương mại 2005</p></h2>
+                <p>Việc hoàn thiện khung pháp lý về <span class="highlight-text">đấu giá hàng hóa</span> trong <span class="highlight-text">Luật Thương mại 2005</span> xuất phát từ những yêu cầu cấp thiết của thực tiễn kinh tế và hội nhập.</p>
             </div>
         </div>
         <section id="dong-luc" class="section-padding pt-8">
@@ -357,7 +463,7 @@
 
         <div class="section-intro-fullwidth animate-on-scroll fade-in-up">
             <div class="content-wrapper">
-                <h2><p><span class="roman-numeral">IV. Luật thương mại 2005 và những trụ cột chính</h2>
+                <h2><p><span class="roman-numeral">IV.</span>Luật thương mại 2005 và những trụ cột chính</p></h2>
                 <p>Luật Thương mại 2005 đã thiết lập một khung pháp lý tương đối hoàn chỉnh cho hoạt động đấu giá hàng hóa, dựa trên các nguyên tắc và quy trình rõ ràng.</p>
             </div>
         </div>
@@ -373,18 +479,42 @@
 
             <div class="mb-12 animate-on-scroll fade-in-up">
                 <h3 class="text-2xl text-center mb-8 font-bold" style="color: #ce0300;">B. Quy Trình Tổng Quan</h3>
-                <div class="space-y-3 md:space-y-4 text-center max-w-2xl mx-auto">
-                    <div class="flowchart-step p-4">1. Xác định <span class="font-semibold">giá khởi điểm</span> của hàng hóa (Điều 194)</div>
-                    <div class="flowchart-arrow"></div>
-                    <div class="flowchart-step p-4">2. <span class="font-semibold">Thông báo và Niêm yết công khai</span> về việc đấu giá (Điều 196, 197)</div>
-                    <div class="flowchart-arrow"></div>
-                    <div class="flowchart-step p-4">3. <span class="font-semibold">Đăng ký tham gia</span> đấu giá và Nộp khoản tiền đặt trước (nếu có)</div>
-                    <div class="flowchart-arrow"></div>
-                    <div class="flowchart-step p-4">4. <span class="font-semibold">Tiến hành cuộc đấu giá</span> theo phương thức đã công bố (trả giá lên / đặt giá xuống)</div>
-                    <div class="flowchart-arrow"></div>
-                    <div class="flowchart-step p-4">5. Lập <span class="font-semibold">văn bản bán đấu giá</span> hàng hóa, xác nhận kết quả (Điều 203)</div>
+                <div class="flowchart-container">
+                    <div class="flowchart-step-wrapper">
+                        <div class="flowchart-step">
+                            <span class="step-number-container">1</span>
+                            <span class="step-text">Xác định <span class="font-semibold">giá khởi điểm</span> của hàng hóa (Điều 194)</span>
+                        </div>
+                        <div class="flowchart-arrow">⇓</div>
+                    </div>
+                    <div class="flowchart-step-wrapper">
+                        <div class="flowchart-step">
+                            <span class="step-number-container">2</span>
+                            <span class="step-text"><span class="font-semibold">Thông báo và Niêm yết công khai</span> về việc đấu giá (Điều 196, 197)</span>
+                        </div>
+                        <div class="flowchart-arrow">⇓</div>
+                    </div>
+                    <div class="flowchart-step-wrapper">
+                        <div class="flowchart-step">
+                            <span class="step-number-container">3</span>
+                            <span class="step-text"><span class="font-semibold">Đăng ký tham gia</span> đấu giá và Nộp khoản tiền đặt trước (nếu có)</span>
+                        </div>
+                        <div class="flowchart-arrow">⇓</div>
+                    </div>
+                    <div class="flowchart-step-wrapper">
+                        <div class="flowchart-step">
+                            <span class="step-number-container">4</span>
+                            <span class="step-text"><span class="font-semibold">Tiến hành cuộc đấu giá</span> theo phương thức đã công bố (trả giá lên / đặt giá xuống)</span>
+                        </div>
+                        <div class="flowchart-arrow">⇓</div>
+                    </div>
+                    <div class="flowchart-step-wrapper">
+                        <div class="flowchart-step">
+                            <span class="step-number-container">5</span>
+                            <span class="step-text">Lập <span class="font-semibold">văn bản bán đấu giá</span> hàng hóa, xác nhận kết quả (Điều 203)</span>
+                        </div>
+                    </div>
                 </div>
-                 <p class="text-center text-base text-slate-700 mt-8">Quy trình này nhằm đảm bảo tính <span class="highlight-text">khách quan</span>, <span class="highlight-text">minh bạch</span> và <span class="font-semibold">chuyên nghiệp</span> của toàn bộ hoạt động đấu giá.</p>
             </div>
             
             <div class="mb-12 animate-on-scroll fade-in-up">
@@ -400,7 +530,7 @@
                 </div>
             </div>
 
-             <div class="animate-on-scroll fade-in-up">
+            <div class="animate-on-scroll fade-in-up">
                 <h3 class="text-2xl text-center mb-8 font-bold" style="color: #ce0300;" >D. Bảng Tóm Tắt Một Số Điều Khoản Trọng Yếu</h3>
                 <div class="overflow-x-auto card p-0">
                     <table class="table-professional">
@@ -427,7 +557,7 @@
                                 <td>Nghĩa vụ của người tổ chức đấu giá</td>
                                 <td class="hidden lg:table-cell">Phải tổ chức đấu giá theo đúng nguyên tắc, thủ tục; thông báo, niêm yết công khai; bảo quản hàng hóa; lập văn bản bán đấu giá; giao hàng và thanh toán.</td>
                             </tr>
-                             <tr>
+                            <tr>
                                 <td class="font-semibold accent-text">Điều 194</td>
                                 <td>Xác định giá khởi điểm</td>
                                 <td class="hidden lg:table-cell">Do người bán hàng xác định; các trường hợp ủy quyền hoặc hàng hóa là đối tượng của biện pháp bảo đảm.</td>
@@ -443,9 +573,9 @@
             </div>
         </section>
 
-         <div class="section-intro-fullwidth animate-on-scroll fade-in-up">
+        <div class="section-intro-fullwidth animate-on-scroll fade-in-up">
             <div class="content-wrapper">
-                <h2><p><span class="roman-numeral">V. So sánh LTM 2005 và Luật đấu giá tài sản 2016</span></h2>
+                <h2><p><span class="roman-numeral">V.</span>So sánh LTM 2005 và Luật đấu giá tài sản 2016</p></h2>
                 <p>Sự ra đời của <span class="highlight-text">Luật Đấu giá Tài sản 2016</span> đã tạo ra một hành lang pháp lý chuyên sâu hơn cho hoạt động đấu giá tài sản nói chung, tuy nhiên, cần có sự phân định rõ ràng với các quy định về đấu giá hàng hóa trong <span class="highlight-text">LTM 2005</span>.</p>
             </div>
         </div>
@@ -473,7 +603,7 @@
 
         <div class="section-intro-fullwidth animate-on-scroll fade-in-up">
             <div class="content-wrapper">
-                 <h2><p><span class="roman-numeral">VI. Thách thức và hướng hoàn thiện</h2>
+                <h2><p><span class="roman-numeral">VI.</span>Thách thức và hướng hoàn thiện</p></h2>
                 <p>Dù <span class="highlight-text">Luật Thương mại 2005</span> đã mang lại những cải cách tích cực, quá trình thực thi vẫn bộc lộ những thách thức, đòi hỏi sự tiếp tục nghiên cứu và hoàn thiện khung pháp lý.</p>
             </div>
         </div>
@@ -502,8 +632,8 @@
         </section>
         
         <section id="ket-luan" class="section-padding animate-on-scroll fade-in-up">
-            <div class="card p-8 md:p-12 text-center" style="background-image: linear-gradient(135deg, #004D40 0%, #00695C 100%);">
-                <h2 class="mb-6"><span class="roman-numeral"><p>VII. Kết luận</h2>
+            <div class="card p-8 md:p-12 text-center">
+                <h2><p><span class="roman-numeral">VII.</span>Kết luận</p></h2>
                 <p class="text-xl md:text-2xl mb-6 leading-relaxed"><span class="highlight-text">Luật Thương mại 2005</span> thực sự là một <span class="font-bold accent-text">dấu ấn pháp lý sâu sắc</span> trong lịch sử phát triển của hoạt động <span class="highlight-text">đấu giá hàng hóa</span> tại Việt Nam. Những quy định tiến bộ của Luật đã góp phần quan trọng vào việc <span class="font-semibold highlight-text">minh bạch hóa và chuyên nghiệp hóa</span> thị trường, tăng cường bảo vệ quyền và lợi ích hợp pháp của các bên tham gia, qua đó tạo điều kiện thuận lợi cho sự phát triển theo hướng <span class="font-semibold highlight-text">hiện đại và hội nhập quốc tế</span>.</p>
                 <p class="text-xl md:text-2xl leading-relaxed">Mặc dù hành trình hoàn thiện pháp luật vẫn đang tiếp diễn, không thể phủ nhận vai trò <span class="font-semibold highlight-text">nền tảng và định hướng</span> mà <span class="highlight-text">Luật Thương mại 2005</span> đã kiến tạo, góp phần vào sự <span class="font-semibold highlight-text">phát triển ổn định và bền vững</span> của hoạt động <span class="highlight-text">đấu giá hàng hóa</span> trong tổng thể nền kinh tế thị trường của Việt Nam.</p>
             </div>
@@ -535,55 +665,91 @@
             const stickyNav = document.getElementById('infographicNav');
             let navHeight = stickyNav ? stickyNav.offsetHeight + 20 : 90; 
 
-            function getSectionId(sectionElement) {
-                if (sectionElement.id && document.querySelector('main section#' + sectionElement.id)) return sectionElement.id;
-                
-                let currentElement = sectionElement;
-                while(currentElement){
-                    if(currentElement.tagName === 'SECTION' && currentElement.id && document.querySelector('main section#' + currentElement.id)) {
-                        return currentElement.id;
-                    }
-                    let nextMainSection = currentElement.nextElementSibling;
-                    while(nextMainSection && nextMainSection.tagName !== 'SECTION' && !nextMainSection.id){
-                        nextMainSection = nextMainSection.nextElementSibling;
-                    }
-                    if(nextMainSection && nextMainSection.id && document.querySelector('main section#' + nextMainSection.id)) return nextMainSection.id;
+            window.addEventListener('resize', () => {
+                navHeight = stickyNav ? stickyNav.offsetHeight + 20 : 90;
+            });
 
-                    currentElement = currentElement.previousElementSibling; 
+            function getSectionId(sectionElement) {
+                if (sectionElement.id && sectionElement.matches('main > section[id]')) {
+                    return sectionElement.id;
                 }
-                return null;
+                
+                if (sectionElement.classList.contains('section-intro-fullwidth')) {
+                    let nextSibling = sectionElement.nextElementSibling;
+                    while (nextSibling) {
+                        if (nextSibling.matches('main > section[id]')) {
+                            return nextSibling.id;
+                        }
+                        if (nextSibling.classList.contains('section-intro-fullwidth')) {
+                             let potentialSectionAfterIntro = nextSibling.nextElementSibling;
+                             if(potentialSectionAfterIntro && potentialSectionAfterIntro.matches('main > section[id]')) {
+                                 return potentialSectionAfterIntro.id;
+                             }
+                        }
+                        nextSibling = nextSibling.nextElementSibling;
+                    }
+                }
+                if (sectionElement.id && document.querySelector('main section#' + sectionElement.id)) return sectionElement.id;
+                return null; 
             }
 
 
             function changeNavActiveState() {
                 let currentSectionId = '';
-                let minDistanceToViewportCenter = Infinity;
+                navHeight = stickyNav ? stickyNav.offsetHeight + 20 : 90; 
+
+                let closestSectionAbove = null;
+                let smallestDistanceAbove = Infinity;
 
                 sections.forEach(section => {
-                    const rect = section.getBoundingClientRect();
-                    const viewportCenter = window.innerHeight / 2;
-                    const sectionCenter = rect.top + rect.height / 2;
-                    const distance = Math.abs(sectionCenter - viewportCenter);
+                    const sectionTop = section.offsetTop;
+                    const scrollYWithOffset = window.scrollY + navHeight + 10; 
 
-                    if (rect.top < window.innerHeight && rect.bottom > 0) {
-                         if (distance < minDistanceToViewportCenter) {
-                            minDistanceToViewportCenter = distance;
-                            currentSectionId = getSectionId(section);
+                    if (scrollYWithOffset >= sectionTop) {
+                        const distance = scrollYWithOffset - sectionTop;
+                        if (distance < smallestDistanceAbove) {
+                            smallestDistanceAbove = distance;
+                            closestSectionAbove = section;
                         }
                     }
                 });
-                
-                if (!currentSectionId) { 
-                    for (let i = sections.length - 1; i >= 0; i--) {
-                        const section = sections[i];
-                        const sectionTop = section.offsetTop - navHeight;
-                        if (window.scrollY >= sectionTop -50) { 
-                            currentSectionId = getSectionId(section);
-                            break;
+
+                if (closestSectionAbove) {
+                    currentSectionId = getSectionId(closestSectionAbove);
+                }
+
+                if (!currentSectionId && navLinks.length > 0) {
+                    if (window.scrollY < (sections[0].offsetTop - navHeight)) {
+                        const firstSectionLink = navLinks[0].getAttribute('href').substring(1);
+                        if (getSectionId(sections[0]) === firstSectionLink) {
+                            currentSectionId = firstSectionLink;
+                        }
+                    } else if (window.scrollY + window.innerHeight >= document.body.offsetHeight - 80) { 
+                        const lastSectionLink = navLinks[navLinks.length -1].getAttribute('href').substring(1);
+                        let actualLastSectionId = null;
+                        for(let i = sections.length - 1; i >= 0; i--) {
+                            const id = getSectionId(sections[i]);
+                            if(id) {
+                                actualLastSectionId = id;
+                                break;
+                            }
+                        }
+                        if (actualLastSectionId === lastSectionLink) {
+                             currentSectionId = lastSectionLink;
                         }
                     }
                 }
-
+                
+                if (!currentSectionId) {
+                    for (let i = 0; i < sections.length; i++) {
+                        const section = sections[i];
+                        const rect = section.getBoundingClientRect();
+                        if (rect.top < window.innerHeight && rect.bottom > navHeight) {
+                            currentSectionId = getSectionId(section);
+                            if (currentSectionId) break;
+                        }
+                    }
+                }
 
                 navLinks.forEach(link => {
                     link.classList.remove('active');
@@ -591,14 +757,6 @@
                         link.classList.add('active');
                     }
                 });
-                
-                 if (!currentSectionId && navLinks.length > 0) {
-                    if (window.scrollY < (sections[0].offsetTop - navHeight)) {
-                        navLinks[0].classList.add('active'); 
-                    } else if (window.scrollY + window.innerHeight >= document.body.offsetHeight - 80) { 
-                         navLinks[navLinks.length -1].classList.add('active'); 
-                    }
-                 }
             }
 
             navLinks.forEach(link => {
@@ -606,8 +764,9 @@
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
-                   
+                    
                     if (targetElement) {
+                        navHeight = stickyNav ? stickyNav.offsetHeight + 20 : 90;
                         let elementPosition = targetElement.offsetTop - navHeight + 15; 
                         window.scrollTo({
                             top: elementPosition,
@@ -642,14 +801,15 @@
             });
             
             setTimeout(() => { 
-                 navHeight = stickyNav ? stickyNav.offsetHeight + 20 : 90;
-                 changeNavActiveState();
-                 animatedElements.forEach(el => { 
-                    if (el.getBoundingClientRect().top < window.innerHeight && el.getBoundingClientRect().bottom > 0) {
+                navHeight = stickyNav ? stickyNav.offsetHeight + 20 : 90;
+                changeNavActiveState(); 
+                animatedElements.forEach(el => { 
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
                         el.classList.add('is-visible');
                     }
-                 });
-            }, 150);
+                });
+            }, 250); 
         });
     </script>
 
