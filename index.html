@@ -18,9 +18,13 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             scroll-behavior: smooth;
+            overflow-x: hidden; /* Ngăn cuộn ngang */
         }
 
-        body {}
+        body {
+             /* Thêm overflow-x: hidden; vào body nếu cần, nhưng html thường đủ */
+             /* overflow-x: hidden; */
+        }
         
         h1, h2, h3, h4, h5, h6 { 
             font-family: 'Montserrat', sans-serif;
@@ -32,9 +36,9 @@
             font-size: 28px; 
             font-weight: 700; 
             color: #004D40; 
-            margin-bottom: 1.25rem; /* Default margin-bottom for h2 */
+            margin-bottom: 1.5rem; 
         }
-        h2 p { /* The <p> tag inside <h2> carries the border */
+        h2 p {
             display: inline-flex; 
             align-items: baseline;
             margin-bottom: 0; 
@@ -57,7 +61,7 @@
 
         @media (min-width: 768px) {
             h1 { font-size: 44px; font-weight: 800; }
-            h2 { font-size: 34px; margin-bottom: 2rem; /* Default margin-bottom for h2 on larger screens */ }
+            h2 { font-size: 34px; margin-bottom: 2rem; }
             h2 p { padding-bottom: 0.4rem; }
             h2 .roman-numeral { font-size: 36px; margin-right: 0.95rem; }
             h3 { font-size: 26px; margin-bottom: 1.25rem; }
@@ -68,11 +72,11 @@
         }
         
         .section-intro-fullwidth h2 {
-            margin-bottom: 2.5rem; /* Increased margin-bottom for h2 in intro sections */
+            margin-bottom: 2.5rem; 
         }
         @media (min-width: 768px) {
             .section-intro-fullwidth h2 {
-                margin-bottom: 3rem; /* Further increase for larger screens */
+                margin-bottom: 3rem; 
             }
         }
 
