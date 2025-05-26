@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trải nghiệm scrollytelling về pháp luật đấu giá hàng hóa tại Việt Nam, với thiết kế chuyên nghiệp, màu sắc tươi mới và sửa lỗi hiển thị biểu đồ.">
+    <title>Scrollytelling Professional & Fresh: Đấu Giá Hàng Hóa tại Việt Nam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!--
+    NARRATIVE PLAN & STRUCTURE: Maintained, focus on aesthetic redesign and major bug fix for chart.
+
+    VISUALIZATION & INTERACTION:
+    - Scroll-triggered animations.
+    - Professional and fresh color palette.
+    - Chart.js with new professional colors, chart display fixed.
+    - Gemini API integration.
+
+    CONFIRMATION: NO SVG, NO MERMAID JS. Chart.js (Canvas), HTML/CSS, JS for scroll effects.
+    NEW PROFESSIONAL & FRESH COLOR PALETTE:
+        - Main Background: #F7F9FC (Alice Blue - Very Light Grayish Blue)
+        - Hero/Footer Background: #0D47A1 (Dark Blue - Classic Professional)
+        - Hero H1/Footer Text: #FFFFFF
+        - Section Titles: #1565C0 (Medium Blue - Professional)
+        - Sub-Section Titles: #42A5F5 (Lighter Blue - Fresh) or #26A69A (Teal - Professional Fresh)
+        - Content Block Light: #FFFFFF (White) with border #CFD8DC (Blue Gray - Subtle)
+        - Content Block Dark (for emphasis): #E3F2FD (Very Light Blue) with border #90CAF9 (Light Blue)
+        - Accent Text (for important notes, not errors): #FF8A65 (Light Coral - Soft Warm Accent)
+        - Highlight Stat: #26A69A (Teal)
+        - Chart Bar Colors: ['#42A5F5', '#FFCA28', '#26A69A', '#66BB6A'] (Lighter Blue, Light Amber, Teal, Light Green)
+        - Gemini Button: #1976D2 (Medium Blue)
+        - Gemini Output: #E0F2F1 (Very Light Teal/Mint)
+    FONTS:
+        - Headings: Merriweather (Serif)
+        - Body: Open Sans (Sans-serif)
+    -->
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #F7F9FC; /* Alice Blue - Very Light Grayish Blue */
+            color: #37474F; /* Blue Grey 800 - Darker for text */
+            line-height: 1.75; 
+            overflow-x: hidden; 
+        }
+        .main-content-area { 
+            max-width: 780px; 
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+        }
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            background-color: #0D47A1; /* Dark Blue - Classic Professional */
+            color: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .hero-section h1 {
+            color: #FFFFFF;
+            font-size: 2.8rem; 
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        .hero-section p {
+            font-size: 1.15rem;
+            color: #E3F2FD; /* Very Light Blue */
+            max-width: 680px;
+        }
+        .hero-section .scroll-prompt {
+            color: #FFFFFF; 
+            border: 1.5px solid #FFFFFF; 
+            padding: 0.5rem 1.1rem;
+            border-radius: 20px;
+            margin-top: 2.5rem;
+            animation: bounce 2s infinite;
+            font-weight: 500;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-8px);}
+            60% {transform: translateY(-4px);}
+        }
+
+        /* Scroll Sections */
+        .scroll-section {
+            min-height: 90vh; 
+            padding: 4rem 1.5rem; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; 
+            text-align: center; 
+            border-bottom: 1px solid #E0E0E0; 
+        }
+        .scroll-section:last-child {
+            border-bottom: none;
+            min-height: 40vh; 
+        }
+        .scroll-section.align-left { 
+            align-items: flex-start;
+            text-align: left;
+        }
+        .section-title-scrolly {
+            font-size: 2.2rem; 
+            font-weight: 700;
+            margin-bottom: 2rem; 
+            color: #1565C0; /* Medium Blue - Professional */
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        .section-title-scrolly::after { 
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3.5px;
+            background-color: #FFCA28; /* Light Amber */
+            border-radius: 2px;
+        }
+        .scroll-section.align-left .section-title-scrolly::after {
+            left: 0;
+            transform: translateX(0);
+        }
+
+        .sub-section-title-scrolly {
+            font-size: 1.65rem; 
+            font-weight: 700;
+            color: #42A5F5; /* Lighter Blue - Fresh */
+            margin-top: 1.6rem;
+            margin-bottom: 1.1rem;
+        }
+        .content-block .sub-section-title-scrolly { /* More specific for content blocks */
+             color: #1E88E5; /* Slightly darker blue for titles in light blocks */
+        }
+
+
+        /* Content Blocks - Professional & Fresh Style */
+        .content-block {
+            background-color: #FFFFFF; 
+            padding: 1.8rem; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06); 
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 700px; 
+            text-align: left; 
+            border: 1px solid #CFD8DC; /* Blue Gray - Subtle border */
+            color: #37474F;
+        }
+
+         .content-block-dark { 
+            background-color: #E3F2FD; /* Very Light Blue */
+            color: #263238; /* Darker Blue Grey for text */
+            padding: 1.8rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06); 
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 700px;
+            text-align: left;
+            border: 1px solid #90CAF9; /* Light Blue border */
+        }
+        .content-block-dark h3, .content-block-dark .sub-section-title-scrolly {
+            color: #0D47A1; /* Dark Blue for titles on light blue blocks */
+        }
+        .content-block-dark p, .content-block-dark li {
+            color: #37474F; 
+        }
+        .content-block-dark .accent-text-scrolly {
+             color: #FF8A65; /* Light Coral */
+        }
+
+        .accent-text-scrolly {
+            color: #FF8A65; /* Light Coral - Soft Warm Accent */
+            font-weight: 600;
+        }
+        .highlight-stat-scrolly {
+            font-family: 'Merriweather', serif;
+            font-size: 3.8rem; 
+            font-weight: 700; 
+            color: #26A69A; /* Teal */
+            line-height: 1;
+            margin: 1.1rem 0;
+        }
+        /* Flow Diagram - Professional & Fresh Style */
+        .flow-diagram-container-scrolly {
+            background-color: #FFFFFF; 
+            padding: 1.6rem;
+            border-radius: 8px;
+            border: 1px solid #B0BEC5; /* Blue Grey Lighten-2 */
+            width: 100%;
+            max-width: 650px; 
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        .flow-step-scrolly {
+            background-color: #F7F9FC; /* Alice Blue background for steps */
+            color: #37474F;
+            padding: 0.8rem 1rem;
+            border-radius: 6px; 
+            text-align: left; 
+            margin-bottom: 0.9rem;
+            border: 1px solid #CFD8DC; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            display: flex; 
+            align-items: center;
+        }
+        .flow-step-scrolly .icon {
+            margin-right: 0.75rem;
+            font-size: 1.15rem;
+        }
+        .flow-step-scrolly.problem { border-left: 4px solid #FF8A65; /* Light Coral */ }
+        .flow-step-scrolly.problem .icon { color: #FF8A65; }
+        .flow-step-scrolly.solution { border-left: 4px solid #26A69A; /* Teal */ }
+        .flow-step-scrolly.solution .icon { color: #26A69A; }
+
+        .flow-arrow-scrolly {
+            font-size: 1.5rem; color: #78909C; /* Blue Grey */
+            text-align: center; margin: 0.75rem 0;
+            display: flex; justify-content: center; align-items: center; height: 35px; 
+        }
+         .flow-arrow-scrolly.horizontal {
+            writing-mode: horizontal-tb; transform: none; margin: 0 0.5rem; 
+         }
+
+        /* Chart Container and Chart Fix */
+        .chart-container-scrolly {
+            position: relative;
+            width: 100%; /* Take full width of its parent */
+            max-width: 580px; /* But not wider than this */
+            margin: 2rem auto; 
+            height: 400px; /* Fixed height for better control, adjust if needed */
+            background-color: #FFFFFF;
+            padding: 1.5rem; 
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            border: 1px solid #CFD8DC;
+            overflow: hidden; /* Prevent content spill */
+        }
+         .chart-container-scrolly .sub-section-title-scrolly {
+            margin-top: 0; 
+            margin-bottom: 1rem;
+            text-align: center; /* Center chart title */
+        }
+        .chart-canvas-wrapper { /* New wrapper for canvas */
+            position: relative;
+            height: calc(100% - 40px); /* Adjust based on title height */
+            width: 100%;
+        }
+
+
+        .gemini-button-scrolly {
+            background-color: #1976D2; /* Medium Blue */
+            color: #FFFFFF; 
+            padding: 0.7rem 1.4rem; 
+            border-radius: 8px; 
+            font-weight: 600; 
+            transition: background-color 0.3s, transform 0.2s; border: none; cursor: pointer;
+            display: inline-flex; align-items: center; font-size: 0.95rem;
+            box-shadow: 0 2px 5px rgba(25, 118, 210, 0.25);
+        }
+        .gemini-button-scrolly:hover { 
+            background-color: #1565C0; /* Darker Medium Blue */
+            transform: translateY(-1.5px); 
+        }
+        .gemini-button-scrolly .icon { margin-right: 0.5rem; font-size: 1.1em; }
+
+        .gemini-output-scrolly {
+            margin-top: 1.6rem; padding: 1.5rem; 
+            background-color: #E0F2F1; /* Very Light Teal/Mint */
+            border-radius: 8px;
+            font-size: 0.9rem; color: #00695C; /* Dark Teal text */
+            min-height: 75px; 
+            border: 1px solid #B2DFDB; /* Light Teal border */
+            line-height: 1.65;
+        }
+        .list-disc, .list-decimal { padding-left: 1.5rem; text-align: left; }
+        .list-disc li, .list-decimal li { margin-bottom: 0.6rem; }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(25px); 
+            transition: opacity 0.75s ease-out, transform 0.75s ease-out; 
+        }
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .page-footer-scrolly {
+            background-color: #0D47A1; /* Dark Blue */
+            color: #B0BEC5; /* Blue Grey Lighten-1 */
+            padding: 3rem 1rem; 
+            text-align: center;
+        }
+        .page-footer-scrolly p { margin-bottom: 0.6rem; font-size: 0.85rem; }
+        .page-footer-scrolly .disclaimer { font-style: italic; color: #78909C; } 
+
+        @media (min-width: 1600px) {
+            body { max-width: 1400px; margin-left: auto; margin-right: auto; }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero-section">
+        <h1 class="scroll-reveal">Đấu Giá Hàng Hóa tại Việt Nam</h1>
+        <p class="scroll-reveal" style="transition-delay: 0.2s;">Hành Trình Pháp Lý, Thực Tiễn và Hướng Tới Tương Lai Minh Bạch</p>
+        <p class="mt-8 scroll-reveal scroll-prompt" style="transition-delay: 0.4s;">👇 Cuộn xuống để khám phá 👇</p>
+    </header>
+
+    <main>
+        <section id="scene1-mo-dau" class="scroll-section align-left">
+            <div class="main-content-area">
+                <h2 class="section-title-scrolly scroll-reveal">Lời Mở Đầu: Một "Cú Hích" và Nhu Cầu Cấp Thiết</h2>
+                <div class="content-block scroll-reveal">
+                    <h3 class="sub-section-title-scrolly">Thị Trường Nghệ Thuật Ghi Dấu Ấn Lịch Sử</h3>
+                    <p class="mb-4">Sự kiện bức tranh "Chân dung Madam Phương" của họa sĩ Mai Trung Thứ được bán với giá <span class="font-bold accent-text-scrolly text-lg">72,5 tỷ VND</span> tại Sotheby's Hồng Kông không chỉ là một kỷ lục. Nó là một "cú hích", khơi dậy sự quan tâm đến tiềm năng khổng lồ của thị trường đấu giá các mặt hàng giá trị cao tại Việt Nam.</p>
+                    <div class="text-center my-5">
+                        <div class="highlight-stat-scrolly">72,5 TỶ</div>
+                        <p class="text-gray-500 text-sm">VND - Giá trị bức "Chân dung Madam Phương"</p>
+                    </div>
+                    <p>Dù đấu giá phổ biến toàn cầu, ở Việt Nam, việc áp dụng cho đa dạng hàng hóa còn hạn chế. Sự kiện này minh chứng nhu cầu và khả năng chi trả cho sản phẩm độc đáo là có thật.</p>
+                </div>
+                <div class="content-block-dark scroll-reveal">
+                    <h3 class="sub-section-title-scrolly">Thực Trạng và Yêu Cầu Hoàn Thiện Pháp Luật</h3>
+                    <p>Đấu giá hàng hóa tại Việt Nam chưa là kênh thương mại phổ biến cho đa số sản phẩm. Để nâng cao hiệu quả kinh tế và sức cạnh tranh quốc tế, việc <span class="font-semibold">xây dựng hành lang pháp lý hoàn chỉnh, minh bạch cho hoạt động đấu giá</span> là yêu cầu cấp thiết.</p>
+                    <button id="analyzeMarketButton" class="gemini-button-scrolly mt-5 scroll-reveal"><span class="icon">✨</span>Phân tích Tiềm năng Thị trường Đấu giá VN (AI)</button>
+                    <div id="marketAnalysisOutput" class="gemini-output-scrolly scroll-reveal"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="scene2-ban-chat-khai-quat" class="scroll-section align-left">
+            <div class="main-content-area">
+                <h2 class="section-title-scrolly scroll-reveal">Bản Chất Đấu Giá Hàng Hóa: Khái Quát Pháp Lý</h2>
+                <div class="content-block scroll-reveal">
+                    <p class="mb-3 text-md">Theo Khoản 1 Điều 185 Luật Thương mại 2005, đấu giá hàng hoá được định nghĩa:</p>
+                    <blockquote class="border-l-4 border-[#42A5F5] pl-5 italic my-4 py-2 bg-gray-50 rounded-r-md text-gray-600">
+                        “Là hoạt động thương mại, theo đó người bán hàng tự mình hoặc thuê người tổ chức đấu giá thực hiện việc bán hàng hoá công khai để chọn người mua trả giá cao nhất.”
+                    </blockquote>
+                    <h3 class="sub-section-title-scrolly mt-5">Phân Loại Chính</h3>
+                    <ul class="list-disc space-y-1 text-gray-700">
+                        <li><span class="font-semibold text-[#1565C0]">Đấu giá tài sản dân sự:</span> Thường liên quan đến tài sản cá nhân, thi hành án.</li>
+                        <li><span class="font-semibold text-[#1565C0]">Đấu giá hàng hóa thương mại:</span> Do thương nhân tiến hành, nhằm mục đích lợi nhuận, là trọng tâm của phân tích này.</li>
+                    </ul>
+                    <p class="mt-3 text-gray-700">Đây là phương thức bán hàng đặc thù, nơi giá trị được xác lập qua sự <span class="font-semibold accent-text-scrolly">cạnh tranh công khai</span> của những người mua tiềm năng.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="scene3-ban-chat-dac-diem" class="scroll-section align-left">
+            <div class="main-content-area">
+                 <h2 class="section-title-scrolly scroll-reveal">Bản Chất Đấu Giá Hàng Hóa: Những Đặc Điểm Cốt Lõi</h2>
+                <div class="grid md:grid-cols-2 gap-6"> 
+                    <div class="content-block scroll-reveal">
+                        <h3 class="sub-section-title-scrolly">Hoạt Động Thương Mại</h3>
+                        <ul class="list-disc space-y-1">
+                            <li><span class="font-semibold">Chủ thể:</span> Ít nhất một bên tham gia phải là <span class="font-semibold">thương nhân</span>.</li>
+                            <li><span class="font-semibold">Mục đích:</span> Hoạt động cốt lõi là <span class="font-semibold">tìm kiếm lợi nhuận</span>.</li>
+                        </ul>
+                    </div>
+                    <div class="content-block scroll-reveal" style="transition-delay: 0.15s;">
+                        <h3 class="sub-section-title-scrolly">Đặc Điểm Riêng Biệt</h3>
+                         <ul class="list-disc space-y-1">
+                            <li><span class="font-semibold">Phương thức bán đặc thù:</span> Người bán tự tổ chức hoặc thuê dịch vụ chuyên nghiệp.</li>
+                            <li><span class="font-semibold">Đối tượng đa dạng:</span> Hàng hóa thương mại được phép lưu thông.</li>
+                            <li><span class="font-semibold">Hình thức pháp lý kép:</span> Hợp đồng dịch vụ và Văn bản bán đấu giá.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="scene4-ban-chat-vai-tro" class="scroll-section align-left">
+            <div class="main-content-area">
+                <h2 class="section-title-scrolly scroll-reveal">Vai Trò Quan Trọng Của Đấu Giá Hàng Hóa</h2>
+                <div class="content-block-dark scroll-reveal">
+                    <ul class="space-y-3 text-md">
+                        <li class="flex items-start"><span class="text-xl mr-2 text-[#FFCA28]">🤝</span> Tạo sân chơi <span class="font-semibold mx-1">công bằng, minh bạch</span>.</li>
+                        <li class="flex items-start"><span class="text-xl mr-2 text-[#FFCA28]">🔍</span> Phản ánh <span class="font-semibold mx-1">giá trị thực của thị trường</span>.</li>
+                        <li class="flex items-start"><span class="text-xl mr-2 text-[#FFCA28]">📈</span> Tối ưu hóa <span class="font-semibold mx-1">gặp gỡ cung và cầu</span>.</li>
+                        <li class="flex items-start"><span class="text-xl mr-2 text-[#FFCA28]">🌍</span> Góp phần <span class="font-semibold mx-1">thúc đẩy lưu thông hàng hóa</span>.</li>
+                        <li class="flex items-start"><span class="text-xl mr-2 text-[#FFCA28]">😊</span> Trao quyền cho người mua <span class="font-semibold mx-1">quyết định giá cuối cùng</span>.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="scene5-phap-ly-giam-dinh" class="scroll-section align-left">
+            <div class="main-content-area">
+                <h2 class="section-title-scrolly scroll-reveal">Thực Trạng Pháp Lý: Vấn Đề Giám Định Hàng Hóa</h2>
+                <div class="content-block scroll-reveal">
+                    <h3 class="sub-section-title-scrolly">Thực trạng còn tồn tại</h3>
+                    <p class="mb-2">Việc giám định hàng hóa trước đấu giá <span class="font-semibold accent-text-scrolly">không phải là yêu cầu bắt buộc</span> trong mọi trường hợp. Điều này tiềm ẩn rủi ro về tính khách quan, có thể dẫn đến định giá không chính xác hoặc trục lợi.</p>
+                    <h3 class="sub-section-title-scrolly">Đề xuất hoàn thiện</h3>
+                    <ul class="list-disc space-y-1">
+                        <li>Quy định rõ các trường hợp bắt buộc giám định (hàng hóa giá trị lớn, phức tạp).</li>
+                        <li>Xác định tiêu chuẩn năng lực của tổ chức/cá nhân giám định.</li>
+                        <li>Khuyến khích công khai kết quả giám định.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="scene6-phap-ly-quyen-so-huu" class="scroll-section align-left">
+            <div class="main-content-area">
+                <h2 class="section-title-scrolly scroll-reveal">Thực Trạng Pháp Lý: Chuyển Giao Quyền Sở Hữu</h2>
+                <div class="content-block scroll-reveal">
+                    <h3 class="sub-section-title-scrolly">Thực trạng còn tồn tại</h3>
+                    <p class="mb-2">Pháp luật <span class="font-semibold accent-text-scrolly">chưa có quy định thống nhất về thời hạn</span> người bán phải hoàn tất chuyển giao giấy tờ sở hữu. Sự chậm trễ này gây khó khăn cho người mua, đặc biệt với bất động sản.</p>
+                    <h3 class="sub-section-title-scrolly">Đề xuất hoàn thiện</h3>
+                    <ul class="list-disc space-y-1 mb-5">
+                        <li>Bổ sung quy định về thời hạn cụ thể cho việc chuyển giao.</li>
+                        <li>Đơn giản hóa thủ tục hành chính liên quan.</li>
+                    </ul>
+                </div>
+                <div class="flow-diagram-container-scrolly scroll-reveal" style="transition-delay: 0.15s;">
+                    <h3 class="sub-section-title-scrolly text-center text-[#1565C0]">Minh Họa Quy Trình & Bất Cập</h3>
+                    <div class="mb-4">
+                        <div class="flow-step-scrolly problem"><span class="icon">👤</span> <div><strong>Người Bán</strong><br><span class="text-xs text-gray-500">(Sau đấu giá)</span></div></div>
+                        <div class="flow-arrow-scrolly">⬇️</div>
+                        <div class="flow-step-scrolly problem"><span class="icon">⚠️</span> <div><strong>Chuyển Giao Giấy Tờ</strong><br><span class="text-xs text-gray-500">Không rõ thời hạn</span></div></div>
+                        <div class="flow-arrow-scrolly">⬇️</div>
+                        <div class="flow-step-scrolly problem"><span class="icon">⏳</span> <div><strong>Người Mua</strong><br><span class="text-xs text-gray-500">Chờ đợi, quyền lợi bị ảnh hưởng</span></div></div>
+                    </div>
+                    <p class="text-center my-3 font-semibold accent-text-scrolly">Giải pháp đề xuất: Quy định rõ & thủ tục tinh gọn</p>
+                     <div class="mt-3">
+                        <div class="flow-step-scrolly solution"><span class="icon">👤</span> <strong>Người Bán</strong></div>
+                        <div class="flow-arrow-scrolly">⬇️</div>
+                        <div class="flow-step-scrolly solution"><span class="icon">✅</span> <div><strong>Chuyển Giao Giấy Tờ</strong><br><span class="text-xs text-gray-500">Trong thời hạn quy định</span></div></div>
+                        <div class="flow-arrow-scrolly">⬇️</div>
+                        <div class="flow-step-scrolly solution"><span class="icon">👍</span> <div><strong>Người Mua</strong><br><span class="text-xs text-gray-500">Nhận quyền sở hữu kịp thời</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="scene7-phap-ly-hop-dong" class="scroll-section align-left">
+            <div class="main-content-area">
+                <h2 class="section-title-scrolly scroll-reveal">Thực Trạng Pháp Lý: Hợp Đồng Đấu Giá</h2>
+                <div class="content-block scroll-reveal">
+                    <h3 class="sub-section-title-scrolly">Vấn đề hiệu lực hợp đồng</h3>
+                    <p class="mb-2">Với bất động sản, hợp đồng thường chỉ hiệu lực sau công chứng. Khoảng thời gian từ đấu giá thành công đến công chứng có thể phát sinh tranh chấp, "văn bản bán đấu giá" chưa đủ mạnh để bảo vệ toàn diện.</p>
+                    <h3 class="sub-section-title-scrolly">Vấn đề nghĩa vụ liên đới</h3>
+                    <p class="mb-2">Chưa có quy định rõ về trách nhiệm liên đới của người tổ chức đấu giá nếu họ biết hàng hóa có khuyết tật hoặc người bán không có quyền bán nhưng vẫn tiến hành.</p>
+                    <h3 class="sub-section-title-scrolly">Đề xuất hoàn thiện</h3>
+                    <ul class="list-disc space-y-1">
+                        <li>Nâng cao giá trị pháp lý của "văn bản bán đấu giá" hoặc rút ngắn thời gian công chứng.</li>
+                        <li>Bổ sung quy định về trách nhiệm liên đới của tổ chức đấu giá.</li>
+                        <li>Xây dựng quy chế giải quyết tranh chấp hiệu quả.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="scene8-dau-gia-truc-tuyen-khai-quat" class="scroll-section align-left">
+            <div class="main-content-area">
+                <h2 class="section-title-scrolly scroll-reveal">Đấu Giá Trực Tuyến: Xu Hướng Tất Yếu</h2>
+                <div class="content-block scroll-reveal">
+                    <h3 class="sub-section-title-scrolly">Ghi Nhận Pháp Lý Bước Đầu</h3>
+                    <p>Luật Đấu giá tài sản 2016 đã công nhận "đấu giá trực tuyến". Đây là bước tiến quan trọng, phù hợp xu thế chuyển đổi số.</p>
+                    <p class="mt-1">Tuy nhiên, pháp luật <span class="font-semibold accent-text-scrolly">chưa có khái niệm hay quy định chi tiết</span> cho "đấu giá HÀNG HÓA trực tuyến" trong lĩnh vực thương mại.</p>
+                </div>
+                <div class="chart-container-scrolly scroll-reveal" style="transition-delay: 0.15s;">
+                     <h3 class="sub-section-title-scrolly text-center mb-3 text-[#1565C0]">Ưu Điểm Vượt Trội Của Đấu Giá Trực Tuyến</h3>
+                     <div class="chart-canvas-wrapper">
+                        <canvas id="advantagesChart"></canvas>
+                     </div>
+                    <p class="mt-3 text-xs text-center text-gray-500">Biểu đồ minh họa các lợi thế chính của hình thức đấu giá trực tuyến.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="scene9-dau-gia-truc-tuyen-bat-cap" class="scroll-section align-left">
+            <div class="main-content-area">
+                <h2 class="section-title-scrolly scroll-reveal">Đấu Giá Trực Tuyến: Thách Thức và Kiến Nghị</h2>
+                <div class="content-block-dark scroll-reveal">
+                    <h3 class="sub-section-title-scrolly">Những bất cập chính</h3>
+                    <ul class="list-disc mb-3 space-y-1">
+                        <li><span class="font-semibold">Kiểm định chất lượng:</span> Khó khăn kiểm tra thực tế hàng hóa.</li>
+                        <li><span class="font-semibold">Rủi ro thông tin:</span> Nguy cơ thông tin sai lệch, giả mạo.</li>
+                        <li><span class="font-semibold">Khung pháp lý chưa đầy đủ:</span> Thiếu quy định cụ thể về loại hàng hóa, quy trình, trách nhiệm sàn.</li>
+                    </ul>
+                    <h3 class="sub-section-title-scrolly">Một số kiến nghị trọng tâm</h3>
+                    <ol class="list-decimal space-y-1">
+                        <li>Xây dựng quy định chi tiết về giao kết hợp đồng trực tuyến.</li>
+                        <li>Thiết lập cơ chế thẩm định tư cách người tham gia.</li>
+                        <li>Khuyến khích doanh nghiệp xây dựng nền tảng đấu giá an toàn.</li>
+                        <li>Nghiên cứu cơ chế giám sát độc lập.</li>
+                        <li>Hoàn thiện quy định quản lý nhà nước (thuế, tranh chấp).</li>
+                    </ol>
+                    <button id="summarizeOnlineAuctionButton" class="gemini-button-scrolly mt-5 scroll-reveal"><span class="icon">✨</span>Tóm tắt Lợi ích & Thách thức Đấu giá Trực tuyến (AI)</button>
+                    <div id="onlineAuctionSummaryOutput" class="gemini-output-scrolly scroll-reveal"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="scene10-ket-luan" class="scroll-section">
+             <div class="main-content-area">
+                <h2 class="section-title-scrolly scroll-reveal">Kết Luận và Định Hướng Tương Lai</h2>
+                <div class="content-block scroll-reveal">
+                    <p class="text-lg mb-5 leading-relaxed">Hoạt động đấu giá hàng hóa, cả truyền thống và trực tuyến, nắm giữ tiềm năng to lớn trong việc thúc đẩy minh bạch thị trường và hiệu quả kinh tế tại Việt Nam. Để tiềm năng này được khai thác tối đa, việc <span class="font-semibold accent-text-scrolly">tiếp tục nghiên cứu, hoàn thiện khung pháp lý</span> là yêu cầu tiên quyết.</p>
+                    <p class="text-lg font-semibold text-[#1976D2]">Một hành lang pháp lý rõ ràng, toàn diện và phù hợp với thông lệ quốc tế sẽ là nền tảng vững chắc để xây dựng một thị trường đấu giá hàng hóa chuyên nghiệp, đáng tin cậy, góp phần vào sự phát triển bền vững của nền kinh tế đất nước.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="page-footer-scrolly">
+        <div class="main-content-area">
+            <p>&copy; 2025 Phân tích Pháp luật Đấu giá Hàng hóa Việt Nam (Mô phỏng).</p>
+            <p class="disclaimer">Thông tin trên trang này chỉ mang tính chất tham khảo, nghiên cứu học thuật và không cấu thành tư vấn pháp lý chuyên nghiệp. Vui lòng liên hệ luật sư hoặc chuyên gia pháp lý để được tư vấn cụ thể.</p>
+            <p>Nguồn tham khảo chính: Tiểu luận về Đấu giá Hàng hóa và các quy định pháp luật liên quan.</p>
+        </div>
+    </footer>
+
+    <script>
+        function wrapLabels(label, maxWidth) {
+            if (typeof label !== 'string') return [String(label)];
+            const words = label.split(' ');
+            let lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + word).length > maxWidth && currentLine.length > 0) {
+                    lines.push(currentLine.trim());
+                    currentLine = word + ' ';
+                } else {
+                    currentLine += word + ' ';
+                }
+            }
+            lines.push(currentLine.trim());
+            return lines;
+        }
+
+        const chartTextPrimaryColor = '#37474F'; 
+        const chartGridLineColor = 'rgba(55, 71, 79, 0.1)';
+
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }, 
+                tooltip: {
+                    titleFont: { family: "'Merriweather', serif", weight: '700', size: 13 }, 
+                    bodyFont: { family: "'Open Sans', sans-serif", size: 11 },
+                    backgroundColor: 'rgba(21, 101, 192, 0.9)',  // Medium Blue for tooltip
+                    titleColor: '#FFFFFF', 
+                    bodyColor: '#E3F2FD', // Very Light Blue for body
+                    padding: 10,
+                    cornerRadius: 5,
+                    boxPadding: 3,
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            return Array.isArray(label) ? label.join(' ') : label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: { 
+                    beginAtZero: true, 
+                    ticks: { color: chartTextPrimaryColor, font: { family: "'Open Sans', sans-serif", size: 9 }, padding: 4 }, 
+                    grid: { color: chartGridLineColor, drawBorder: false, display: false } 
+                },
+                x: { 
+                    ticks: { color: chartTextPrimaryColor, font: { family: "'Open Sans', sans-serif", size: 10 }, padding: 4 }, 
+                    grid: { color: chartGridLineColor, drawBorder: false }
+                }
+            }
+        };
+        
+        const advantagesData = {
+            labels: [
+                wrapLabels('Ứng dụng CNVC', 14), 
+                wrapLabels('Bảo mật, hạn chế thông đồng', 14), 
+                wrapLabels('Không giới hạn TG, KG', 14),
+                wrapLabels('Linh hoạt trước gián đoạn', 14)
+            ],
+            datasets: [{
+                label: 'Mức độ ưu việt (Thang 5)',
+                data: [4.5, 4.8, 5, 4.7], 
+                backgroundColor: ['#42A5F5', '#FFCA28', '#26A69A', '#66BB6A'], // Lighter Blue, Light Amber, Teal, Light Green
+                borderColor: '#FFFFFF', borderWidth: 0, borderRadius: 5, barThickness: 'flex', maxBarThickness: 28,
+            }]
+        };
+        const advantagesChartCtx = document.getElementById('advantagesChart');
+        if (advantagesChartCtx) {
+            new Chart(advantagesChartCtx.getContext('2d'), { // Ensure getContext('2d')
+                type: 'bar', data: advantagesData,
+                options: { ...commonChartOptions, indexAxis: 'y' }
+            });
+        }
+
+        async function callGeminiAPI(prompt, outputElementId, buttonElement) {
+            const outputElement = document.getElementById(outputElementId);
+            const originalButtonHTML = buttonElement.innerHTML;
+            buttonElement.innerHTML = '<span class="icon">⏳</span>Đang xử lý...';
+            buttonElement.disabled = true;
+            outputElement.innerHTML = '<p class="text-center text-[#1565C0]">Đang tải phân tích từ AI... ✨</p>'; 
+            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            try {
+                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)});
+                if (!response.ok) { const errorData = await response.json(); throw new Error(`API thất bại: ${errorData.error?.message || response.statusText}`); }
+                const result = await response.json();
+                if (result.candidates && result.candidates[0]?.content?.parts?.[0]) {
+                    const rawText = result.candidates[0].content.parts[0].text;
+                    outputElement.innerHTML = `<p>${rawText.replace(/\n/g, '<br>')}</p>`;
+                } else { outputElement.innerHTML = '<p class="text-[#D32F2F] text-center">Lỗi: Không nhận được phản hồi hợp lệ từ AI.</p>';} 
+            } catch (error) { outputElement.innerHTML = `<p class="text-[#D32F2F] text-center">Lỗi: ${error.message}.</p>`; } 
+            finally { buttonElement.innerHTML = originalButtonHTML; buttonElement.disabled = false; }
+        }
+        
+        const analyzeMarketButton = document.getElementById('analyzeMarketButton');
+        if(analyzeMarketButton) {
+            analyzeMarketButton.addEventListener('click', () => {
+                const prompt = "Dựa trên sự kiện bức tranh 'Chân dung Madam Phương' được bán đấu giá thành công với giá 72,5 tỷ VND, hãy phân tích ngắn gọn (khoảng 80-100 từ) bằng tiếng Việt về tiềm năng phát triển của thị trường đấu giá hàng hóa, đặc biệt là các mặt hàng có giá trị cao và độc đáo, tại Việt Nam. Nhấn mạnh các cơ hội chính và những yếu tố then chốt cần thiết để thị trường này phát triển mạnh mẽ và bền vững hơn trong tương lai.";
+                callGeminiAPI(prompt, 'marketAnalysisOutput', analyzeMarketButton);
+            });
+        }
+        const summarizeOnlineAuctionButton = document.getElementById('summarizeOnlineAuctionButton');
+        if(summarizeOnlineAuctionButton) {
+            summarizeOnlineAuctionButton.addEventListener('click', () => {
+                const prompt = "Tóm tắt ngắn gọn (khoảng 80-100 từ) bằng tiếng Việt về những lợi ích chính và thách thức chủ yếu của hình thức đấu giá trực tuyến tại Việt Nam. Về lợi ích, đề cập đến việc ứng dụng công nghệ, tính bảo mật, khả năng vượt qua giới hạn không gian/thời gian, và sự linh hoạt. Về thách thức, nêu bật khó khăn trong kiểm định chất lượng, nguy cơ thông tin sai lệch, và sự thiếu hụt của một khung pháp lý cụ thể. Đưa ra một nhận định tổng quan về xu hướng này.";
+                callGeminiAPI(prompt, 'onlineAuctionSummaryOutput', summarizeOnlineAuctionButton);
+            });
+        }
+
+        // Scroll Reveal Animation
+        const scrollElements = document.querySelectorAll('.scroll-reveal');
+        const elementInView = (el, dividend = 1) => {
+            const elementTop = el.getBoundingClientRect().top;
+            return ( elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend );
+        };
+        const displayScrollElement = (element) => { element.classList.add('visible'); };
+
+        const handleScrollAnimation = () => {
+            scrollElements.forEach((el) => {
+                if (elementInView(el, 1.12)) { 
+                    displayScrollElement(el); 
+                } 
+            });
+        };
+        window.addEventListener('scroll', handleScrollAnimation );
+        document.addEventListener('DOMContentLoaded', () => {
+            handleScrollAnimation(); 
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
